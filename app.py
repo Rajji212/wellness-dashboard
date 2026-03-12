@@ -375,157 +375,58 @@ def init_db():
     conn.close()
 
 def seed_initial_data(path="Employee_Wellness_Scoring_System.xlsx"):
-    """
-    Smart incremental sync from Excel → SQLite.
-    Checks every sheet and inserts ONLY new records (never deletes existing data).
-    Returns (True, report_dict) or (False, error_string).
-    """
+    """Seed from Excel. Accepts explicit path."""
     if not os.path.exists(path):
         return False, f"Excel not found at: {os.path.abspath(path)}"
     try:
-        xl   = pd.read_excel(path, sheet_name=None)
+        xl = pd.read_excel(path, sheet_name=None)
         conn = get_conn()
-        report = {}
-
-        # ── 1. Employee_Master ────────────────────────────────────────────────
-        if 'Employee_Master' in xl:
-            emp = xl['Employee_Master'][['Employee_ID','Employee_Name','Department']].dropna(subset=['Employee_ID']).copy()
-            emp.columns = ['EmployeeID','Name','Department']
-            emp['EmployeeID'] = pd.to_numeric(emp['EmployeeID'], errors='coerce').dropna().astype(int)
-            emp = emp.dropna(subset=['EmployeeID'])
-
-            # Fetch existing IDs once for fast lookup
-            existing_ids = {r[0] for r in conn.execute("SELECT EmployeeID FROM Employees").fetchall()}
-
-            new_emp = 0
-            for _, r in emp.iterrows():
-                eid = int(r['EmployeeID'])
-                if eid not in existing_ids:
-                    conn.execute(
-                        "INSERT INTO Employees (EmployeeID,Name,Department,Designation,JoinDate) VALUES (?,?,?,?,?)",
-                        (eid, r['Name'], r['Department'], '', '')
-                    )
-                    existing_ids.add(eid)
-                    new_emp += 1
-            report['Employees'] = {'new': new_emp, 'skipped': len(emp) - new_emp}
-
-        # ── 2. Event_Master ───────────────────────────────────────────────────
-        if 'Event_Master' in xl:
-            ev = xl['Event_Master'].dropna(subset=['Event_ID']).copy()
-
-            existing_events = {r[0].strip().lower() for r in conn.execute("SELECT EventName FROM Events").fetchall()}
-
-            new_ev = 0
-            for _, r in ev.iterrows():
-                ev_name = str(r['Event_Name']).strip()
-                if ev_name.lower() not in existing_events:
-                    conn.execute(
-                        "INSERT INTO Events (EventName,Type,Difficulty,Multiplier) VALUES (?,?,?,?)",
-                        (ev_name, r['Type'], r['Difficulty_Level (Casual/Medium/High)'], r['Multiplier'])
-                    )
-                    existing_events.add(ev_name.lower())
-                    new_ev += 1
-            report['Events'] = {'new': new_ev, 'skipped': len(ev) - new_ev}
-
-        # ── 3. Participation_Entry ────────────────────────────────────────────
-        if 'Participation_Entry' in xl:
-            part = xl['Participation_Entry'].dropna(subset=['Employee_ID']).copy()
-            part.columns = ['Date','EmployeeID','EmployeeName','EventName','Registered','Participated',
-                            'Position','ParticipationPoints','BasePoints','Multiplier','GamePoints','FinalPoints']
-            part['EmployeeID'] = pd.to_numeric(part['EmployeeID'], errors='coerce').dropna().astype(int)
-            part = part.dropna(subset=['EmployeeID'])
-            for c in ['ParticipationPoints','BasePoints','Multiplier','GamePoints','FinalPoints']:
-                part[c] = pd.to_numeric(part[c], errors='coerce').fillna(0)
-
-            # Build a set of (EmployeeID, EventName, Date) tuples already in DB
-            existing_part = {
-                (r[0], str(r[1]).strip().lower(), str(r[2]))
-                for r in conn.execute("SELECT EmployeeID, EventName, Date FROM Participation").fetchall()
-            }
-
-            new_part = skipped_part = 0
-            updated_employees = set()
-            for _, r in part.iterrows():
-                key = (int(r['EmployeeID']), str(r['EventName']).strip().lower(), str(r['Date']))
-                if key not in existing_part:
-                    conn.execute(
-                        """INSERT INTO Participation
-                           (EmployeeID,EmployeeName,EventName,Date,Position,Registered,Participated,
-                            ParticipationPoints,BasePoints,Multiplier,GamePoints,FinalPoints)
-                           VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
-                        (int(r['EmployeeID']), r['EmployeeName'], r['EventName'], str(r['Date']),
-                         r['Position'], r['Registered'], r['Participated'],
-                         r['ParticipationPoints'], r['BasePoints'], r['Multiplier'],
-                         r['GamePoints'], r['FinalPoints'])
-                    )
-                    existing_part.add(key)
-                    updated_employees.add(int(r['EmployeeID']))
-                    new_part += 1
-                else:
-                    skipped_part += 1
-            report['Participation'] = {'new': new_part, 'skipped': skipped_part}
-
-            # Recalculate scores only for employees who got new participation rows
-            for eid in updated_employees:
-                recalc_score(eid, conn)
-
-        # ── 4. Leaderboard (Scores) ───────────────────────────────────────────
-        if 'Leaderboard' in xl:
-            lb = xl['Leaderboard'][['Employee_ID','Employee_Name','Department','Total_Points']].dropna(subset=['Employee_ID']).copy()
-            lb['Employee_ID'] = pd.to_numeric(lb['Employee_ID'], errors='coerce').dropna().astype(int)
-            lb = lb.dropna(subset=['Employee_ID'])
-
-            # Only update scores for employees NOT already recalculated above
-            already_recalced = report.get('Participation', {}).get('new', 0) > 0
-            existing_score_ids = {r[0] for r in conn.execute("SELECT EmployeeID FROM Scores").fetchall()}
-
-            new_sc = upd_sc = 0
-            for _, r in lb.iterrows():
-                eid = int(r['Employee_ID'])
-                if eid not in existing_score_ids:
-                    # Genuinely new employee score — insert it
-                    conn.execute(
-                        "INSERT OR REPLACE INTO Scores (EmployeeID,EmployeeName,Department,Score,LastUpdated) VALUES (?,?,?,?,?)",
-                        (eid, r['Employee_Name'], r['Department'], r['Total_Points'], date.today().isoformat())
-                    )
-                    existing_score_ids.add(eid)
-                    new_sc += 1
-                else:
-                    # Employee exists — only update if Excel score is higher (new data added in Excel)
-                    current = conn.execute("SELECT Score FROM Scores WHERE EmployeeID=?", (eid,)).fetchone()
-                    if current and float(r['Total_Points']) > float(current[0] or 0):
-                        conn.execute(
-                            "UPDATE Scores SET Score=?,LastUpdated=? WHERE EmployeeID=?",
-                            (r['Total_Points'], date.today().isoformat(), eid)
-                        )
-                        upd_sc += 1
-            report['Leaderboard'] = {'new': new_sc, 'updated': upd_sc, 'skipped': len(lb) - new_sc - upd_sc}
-
-        # ── 5. Schedule ───────────────────────────────────────────────────────
+        # Employees
+        emp = xl['Employee_Master'][['Employee_ID','Employee_Name','Department']].dropna(subset=['Employee_ID'])
+        emp.columns = ['EmployeeID','Name','Department']
+        emp['EmployeeID'] = emp['EmployeeID'].astype(int)
+        emp['Designation'] = ''; emp['JoinDate'] = ''
+        for _, r in emp.iterrows():
+            conn.execute("INSERT OR IGNORE INTO Employees (EmployeeID,Name,Department,Designation,JoinDate) VALUES (?,?,?,?,?)",
+                         (r['EmployeeID'],r['Name'],r['Department'],'',''))
+        # Events
+        ev = xl['Event_Master'].dropna(subset=['Event_ID'])
+        for _, r in ev.iterrows():
+            conn.execute("INSERT OR IGNORE INTO Events (EventName,Type,Difficulty,Multiplier) VALUES (?,?,?,?)",
+                         (r['Event_Name'],r['Type'],r['Difficulty_Level (Casual/Medium/High)'],r['Multiplier']))
+        # Participation
+        part = xl['Participation_Entry'].dropna(subset=['Employee_ID']).copy()
+        part.columns = ['Date','EmployeeID','EmployeeName','EventName','Registered','Participated',
+                        'Position','ParticipationPoints','BasePoints','Multiplier','GamePoints','FinalPoints']
+        part['EmployeeID'] = part['EmployeeID'].astype(int)
+        for c in ['ParticipationPoints','BasePoints','Multiplier','GamePoints','FinalPoints']:
+            part[c] = pd.to_numeric(part[c], errors='coerce').fillna(0)
+        for _, r in part.iterrows():
+            conn.execute("""INSERT INTO Participation
+                (EmployeeID,EmployeeName,EventName,Date,Position,Registered,Participated,
+                 ParticipationPoints,BasePoints,Multiplier,GamePoints,FinalPoints)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (r['EmployeeID'],r['EmployeeName'],r['EventName'],str(r['Date']),
+                 r['Position'],r['Registered'],r['Participated'],
+                 r['ParticipationPoints'],r['BasePoints'],r['Multiplier'],
+                 r['GamePoints'],r['FinalPoints']))
+        # Scores from leaderboard
+        lb = xl['Leaderboard'][['Employee_ID','Employee_Name','Department','Total_Points']].dropna(subset=['Employee_ID'])
+        for _, r in lb.iterrows():
+            conn.execute("""INSERT OR REPLACE INTO Scores (EmployeeID,EmployeeName,Department,Score,LastUpdated)
+                VALUES (?,?,?,?,?)""",
+                (int(r['Employee_ID']),r['Employee_Name'],r['Department'],r['Total_Points'],date.today().isoformat()))
+        # Schedule
         if 'Schedule' in xl:
-            sched = xl['Schedule'].dropna(how='all').iloc[:, :2].copy()
+            sched = xl['Schedule'].dropna(how='all').iloc[:,:2]
             sched.columns = ['EventName','StartTime']
-            sched = sched.dropna(subset=['EventName'])
-
-            existing_sched = {r[0].strip().lower() for r in conn.execute("SELECT EventName FROM Schedule").fetchall()}
-
-            new_sch = 0
             for _, r in sched.iterrows():
-                ev_name = str(r['EventName']).strip()
-                if ev_name.lower() not in existing_sched:
-                    conn.execute(
-                        "INSERT INTO Schedule (EventName,StartTime,Status) VALUES (?,?,?)",
-                        (ev_name, str(r['StartTime']), 'Upcoming')
-                    )
-                    existing_sched.add(ev_name.lower())
-                    new_sch += 1
-            report['Schedule'] = {'new': new_sch, 'skipped': len(sched) - new_sch}
-
-        conn.commit()
-        conn.close()
+                conn.execute("INSERT OR IGNORE INTO Schedule (EventName,StartTime,Status) VALUES (?,?,?)",
+                             (str(r['EventName']),str(r['StartTime']),'Upcoming'))
+        conn.commit(); conn.close()
     except Exception as e:
         return False, str(e)
-    return True, report
+    return True, "Seeded successfully"
 
 def recalc_score(employee_id, conn):
     """Recalculate total score from all participation entries."""
@@ -1653,8 +1554,8 @@ elif "Admin" in page:
                 st.download_button("⬇️ Download",sc_df.to_csv(index=False),"leaderboard.csv","text/csv",use_container_width=True)
 
             st.markdown("---")
-            st.markdown('<div class="sh">🔄 Master Data Sync from Excel</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="ins" style="font-size:0.8rem;">Sync data from <b>Employee_Wellness_Scoring_System.xlsx</b> into the database.<br>Place the Excel file in the <b>same folder as app.py</b> then click sync.<br>✅ <b>Smart Sync:</b> Only NEW records are inserted — existing data is never overwritten or deleted. Scores are auto-recalculated for employees with new participation entries.</div>', unsafe_allow_html=True)
+            st.markdown('<div class="sh">🔄 One-Time Master Data Sync from Excel</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="ins" style="font-size:0.8rem;">Use this to load data from <b>Employee_Wellness_Scoring_System.xlsx</b> into the database.<br>Place the Excel file in the <b>same folder as app.py</b> then click sync. This will add new records without deleting existing ones.</div>', unsafe_allow_html=True)
             sync_path = st.text_input("Excel file path (optional)", placeholder="Leave blank if Excel is in same folder as app.py", key="sync_path_input")
             if st.button("🔄 SYNC FROM EXCEL NOW", use_container_width=True):
                 import pathlib
@@ -1668,38 +1569,11 @@ elif "Admin" in page:
                     st.error(f"❌ Excel file not found at: {os.path.abspath(final_path)}\nPlease place Employee_Wellness_Scoring_System.xlsx in the same folder as app.py")
                 else:
                     result = seed_initial_data(final_path)
-                    ok, payload = result if result else (False, "Unknown error")
-                    if ok and isinstance(payload, dict):
-                        rpt = payload
-                        total_new = sum(v.get('new', 0) for v in rpt.values())
-                        if total_new > 0:
-                            st.success(f"✅ Sync complete! {total_new} new record(s) added across all sheets.")
-                        else:
-                            st.info("✅ Sync complete — database is already up to date. No new records found.")
-                        # Detailed breakdown
-                        rows = []
-                        sheet_icons = {
-                            'Employees':     '👤',
-                            'Events':        '🏆',
-                            'Participation': '📋',
-                            'Leaderboard':   '📊',
-                            'Schedule':      '📅',
-                        }
-                        for sheet, counts in rpt.items():
-                            icon = sheet_icons.get(sheet, '📄')
-                            new_c  = counts.get('new', 0)
-                            upd_c  = counts.get('updated', 0)
-                            skip_c = counts.get('skipped', 0)
-                            detail = f"🆕 {new_c} new"
-                            if upd_c:  detail += f"  |  ✏️ {upd_c} updated"
-                            if skip_c: detail += f"  |  ⏭️ {skip_c} already existed"
-                            rows.append({"Sheet": f"{icon} {sheet}", "Result": detail})
-                        if rows:
-                            st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
-                    elif ok:
-                        st.success("✅ Data synced successfully from Excel!")
+                    if result and result[0]:
+                        st.success(f"✅ Data synced successfully from Excel!")
                     else:
-                        st.error(f"❌ Sync failed: {payload}")
+                        err = result[1] if result else "Unknown error"
+                        st.error(f"❌ Sync failed: {err}")
                     st.rerun()
 
         # ── TAB 6: BMI UPLOAD ──────────────────────────────────────────────────
