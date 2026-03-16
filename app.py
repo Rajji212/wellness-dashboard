@@ -265,6 +265,138 @@ section[data-testid="stSidebar"] > div > div > div > button{{
 ::-webkit-scrollbar-track{{background:{CLG};}}
 ::-webkit-scrollbar-thumb{{background:#C8A090;border-radius:3px;}}
 
+/* ══════════════════════════════════════════
+   RESPONSIVE — Tablet (max 1024px)
+══════════════════════════════════════════ */
+@media screen and (max-width:1024px){{
+    .hero-title{{font-size:1.8rem !important;}}
+    .hero{{padding:22px 24px !important;}}
+    .kpi-v{{font-size:1.7rem !important;}}
+    .pod-av{{width:54px !important;height:54px !important;font-size:1.5rem !important;}}
+    .pod-st{{width:78px !important;}}
+    .pod1 .pod-st{{height:78px !important;}}
+    .pod2 .pod-st{{height:58px !important;}}
+    .pod3 .pod-st{{height:44px !important;}}
+    .pod-nm{{font-size:0.74rem !important;max-width:80px !important;}}
+    /* Stack podium + dept side by side tighter */
+    .podium{{gap:8px !important;}}
+}}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — Mobile (max 768px)
+══════════════════════════════════════════ */
+@media screen and (max-width:768px){{
+    /* Main content padding */
+    .main .block-container{{
+        padding:0.5rem 0.6rem 1rem !important;
+        max-width:100% !important;
+    }}
+    /* Hero banner */
+    .hero{{padding:18px 16px !important;border-radius:12px !important;margin-bottom:16px !important;}}
+    .hero-title{{font-size:1.4rem !important;}}
+    .hero-sub{{font-size:0.58rem !important;letter-spacing:2px !important;}}
+    /* KPI tiles */
+    .kpi{{padding:14px 10px !important;border-radius:10px !important;}}
+    .kpi-v{{font-size:1.4rem !important;}}
+    .kpi-l{{font-size:0.55rem !important;letter-spacing:1px !important;}}
+    .kpi-s{{font-size:0.65rem !important;}}
+    /* Cards */
+    .card{{padding:14px 14px !important;border-radius:12px !important;}}
+    .card-flat{{padding:10px 12px !important;}}
+    /* Podium — stack vertically on mobile */
+    .podium{{flex-direction:column !important;align-items:center !important;gap:10px !important;}}
+    .pod{{flex-direction:row !important;align-items:center !important;gap:12px !important;width:100% !important;}}
+    .pod-av{{width:44px !important;height:44px !important;font-size:1.3rem !important;margin-bottom:0 !important;}}
+    .pod-st{{display:none !important;}}
+    .pod-nm{{text-align:left !important;font-size:0.8rem !important;}}
+    .pod-dp{{text-align:left !important;}}
+    /* Section headers */
+    .sh{{font-size:0.6rem !important;letter-spacing:2px !important;}}
+    /* Ticker */
+    .ticker{{padding:10px 12px !important;border-radius:8px !important;}}
+    .ticker::after{{display:none !important;}}
+    /* Tables */
+    [data-testid="stDataFrame"]{{font-size:0.7rem !important;}}
+    /* Buttons */
+    .stButton>button{{font-size:0.65rem !important;padding:8px 12px !important;}}
+    /* Tabs */
+    [data-testid="stTabs"] [role="tab"]{{font-size:0.58rem !important;letter-spacing:0.5px !important;padding:6px 8px !important;}}
+    /* Inputs */
+    [data-testid="stTextInput"] input{{font-size:0.82rem !important;}}
+    /* Section badges */
+    .badge-done,.badge-live,.badge-soon{{font-size:0.55rem !important;padding:2px 7px !important;}}
+    /* Schedule cards */
+    .sc-done,.sc-live,.sc-soon{{padding:9px 11px !important;}}
+    /* BMI bars */
+    .bmi-normal,.bmi-over,.bmi-obese,.bmi-under{{padding:8px 10px !important;}}
+    /* Quick stats */
+    .qs-card{{padding:8px 10px !important;}}
+    .qs-val{{font-size:0.9rem !important;}}
+    .qs-lbl{{font-size:0.58rem !important;}}
+}}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — Small mobile (max 480px)
+══════════════════════════════════════════ */
+@media screen and (max-width:480px){{
+    .main .block-container{{padding:0.3rem 0.4rem 1rem !important;}}
+    .hero-title{{font-size:1.1rem !important;}}
+    .hero{{padding:14px 12px !important;}}
+    .kpi-v{{font-size:1.2rem !important;}}
+    /* Force single column for KPI on very small screens */
+    [data-testid="stHorizontalBlock"]>[data-testid="stVerticalBlock"]{{
+        min-width:140px !important;
+    }}
+}}
+
+/* ══════════════════════════════════════════
+   SIDEBAR responsive width
+══════════════════════════════════════════ */
+@media screen and (max-width:768px){{
+    [data-testid="stSidebar"]{{
+        min-width:220px !important;
+        max-width:260px !important;
+    }}
+    [data-testid="stSidebar"] > div:first-child{{
+        padding:10px 8px !important;
+    }}
+}}
+@media screen and (max-width:480px){{
+    [data-testid="stSidebar"]{{
+        min-width:190px !important;
+        max-width:220px !important;
+    }}
+}}
+
+/* ══════════════════════════════════════════
+   LAPTOP optimisation (1024–1440px)
+══════════════════════════════════════════ */
+@media screen and (min-width:1025px) and (max-width:1440px){{
+    .main .block-container{{
+        padding:1rem 1.5rem 2rem !important;
+        max-width:1300px !important;
+    }}
+    .hero-title{{font-size:2rem !important;}}
+    .kpi-v{{font-size:1.9rem !important;}}
+}}
+
+/* ══════════════════════════════════════════
+   WIDE SCREEN (1440px+)
+══════════════════════════════════════════ */
+@media screen and (min-width:1441px){{
+    .main .block-container{{
+        padding:1.5rem 3rem 2rem !important;
+        max-width:1600px !important;
+    }}
+}}
+
+/* Always make images and charts fluid */
+img, svg, canvas{{max-width:100% !important;height:auto !important;}}
+[data-testid="stPlotlyChart"]{{width:100% !important;}}
+/* Prevent horizontal scroll on mobile */
+.main{{overflow-x:hidden !important;}}
+.stApp{{overflow-x:hidden !important;}}
+
 /* ── Table centre alignment ── */
 [data-testid="stDataFrame"] th {{
     text-align: center !important;
@@ -299,6 +431,16 @@ section[data-testid="stSidebar"] > div > div > div > button{{
              letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;}}
 .badge-soon{{display:inline-block;background:#FEF9E7;color:#9A7D0A;font-size:0.62rem;font-weight:800;
              letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;}}
+</style>
+""", unsafe_allow_html=True)
+
+# Viewport meta tag — critical for mobile responsiveness
+st.markdown("""
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<style>
+/* Mobile touch improvements */
+* { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+input, select, textarea { font-size: 16px !important; } /* prevents iOS zoom on focus */
 </style>
 """, unsafe_allow_html=True)
 
@@ -462,7 +604,7 @@ def get_dept_stats():
     emp = q("SELECT Department,COUNT(*) as Total FROM Employees GROUP BY Department")
     par = q("""SELECT e.Department, COUNT(DISTINCT p.EmployeeID) as Participated
                FROM Participation p JOIN Employees e ON p.EmployeeID=e.EmployeeID
-               WHERE p.Participated='Yes' GROUP BY e.Department""")
+               GROUP BY e.Department""")
     m = emp.merge(par, on='Department', how='left').fillna(0)
     # Force numeric — fillna(0) can sometimes produce object dtype after merge
     m['Total']       = pd.to_numeric(m['Total'],       errors='coerce').fillna(0).astype(int)
@@ -481,7 +623,7 @@ def get_summary():
     conn = get_conn()
     s = {}
     s['emp']    = conn.execute("SELECT COUNT(*) FROM Employees").fetchone()[0]
-    s['part']   = conn.execute("SELECT COUNT(DISTINCT EmployeeID) FROM Participation WHERE Participated='Yes'").fetchone()[0]
+    s['part']   = conn.execute("SELECT COUNT(DISTINCT EmployeeID) FROM Participation").fetchone()[0]
     s['events'] = conn.execute("SELECT COUNT(*) FROM Events").fetchone()[0]
     s['top']    = conn.execute("SELECT COALESCE(MAX(Score),0) FROM Scores").fetchone()[0]
     conn.close()
@@ -660,7 +802,7 @@ if "Dashboard" in page:
         st.markdown('<div class="sh">🏢 Top 3 Departments · Participation</div>', unsafe_allow_html=True)
         top3d = ds.sort_values('Pct',ascending=False).head(3).reset_index(drop=True)
         rc = [CG,"#A0A0A0","#CD7F32"]; re = ["🥇","🥈","🥉"]
-        for i, row in top3d.iterrows():
+        for i, (_, row) in enumerate(top3d.iterrows()):
             c = rc[i] if i<3 else CR; e = re[i] if i<3 else "▸"
             bg = ["#FFFBEC","#F8F8F8","#FFF5EE"][i] if i<3 else "#FFF"
             st.markdown(
@@ -677,22 +819,55 @@ if "Dashboard" in page:
 
     # Dept bar chart
     st.markdown('<div class="sh" style="margin-top:4px;">📊 Department Participation Overview</div>', unsafe_allow_html=True)
-    ds2 = ds.sort_values('Total', ascending=False)
-    fig = go.Figure()
-    fig.add_trace(go.Bar(name='Total Employees', x=ds2['Department'], y=ds2['Total'],
-        marker=dict(color='#E8DDD0',line=dict(width=0)),
-        text=ds2['Total'], textposition='outside', textfont=dict(size=10,color=CGY,family='DM Sans')))
-    fig.add_trace(go.Bar(name='Participated', x=ds2['Department'], y=ds2['Participated'],
-        marker=dict(color=CR,line=dict(width=0)),
-        text=ds2['Participated'], textposition='outside', textfont=dict(size=10,color=CR,family='DM Sans')))
-    fig.update_layout(barmode='group', paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-        xaxis=dict(tickfont=dict(color=CGY,size=9,family='DM Sans'),gridcolor='rgba(0,0,0,0.04)',tickangle=-30),
-        yaxis=dict(tickfont=dict(color=CGY,size=9,family='DM Sans'),gridcolor='rgba(0,0,0,0.05)'),
-        legend=dict(font=dict(color=CGY,size=10,family='DM Sans'),bgcolor='rgba(0,0,0,0)',orientation='h',x=0,y=1.12),
-        margin=dict(l=10,r=10,t=30,b=70),height=340,bargap=0.22,bargroupgap=0.06)
-    st.markdown('<div class="card" style="padding:14px;">', unsafe_allow_html=True)
-    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar':False})
-    st.markdown('</div>', unsafe_allow_html=True)
+    if len(ds) == 0:
+        st.markdown('<div class="ins">No department data available.</div>', unsafe_allow_html=True)
+    else:
+        ds2 = ds.sort_values('Total', ascending=False)
+        fig = go.Figure()
+        # Bar: Total Employees
+        fig.add_trace(go.Bar(
+            name='Total Employees', x=ds2['Department'], y=ds2['Total'],
+            marker=dict(color='#E8DDD0', line=dict(width=0)),
+            text=ds2['Total'], textposition='outside',
+            textfont=dict(size=10, color=CGY, family='DM Sans'),
+            yaxis='y1'
+        ))
+        # Bar: Participated
+        fig.add_trace(go.Bar(
+            name='Participated', x=ds2['Department'], y=ds2['Participated'],
+            marker=dict(color=CR, line=dict(width=0)),
+            text=ds2['Participated'], textposition='outside',
+            textfont=dict(size=10, color=CR, family='DM Sans'),
+            yaxis='y1'
+        ))
+        # Line: Participation %
+        fig.add_trace(go.Scatter(
+            name='Participation %', x=ds2['Department'], y=ds2['Pct'],
+            mode='lines+markers+text',
+            line=dict(color=CG, width=2.5, dash='solid'),
+            marker=dict(size=9, color=CG, line=dict(width=2, color='#fff')),
+            text=[f"{v}%" for v in ds2['Pct']],
+            textposition='top center',
+            textfont=dict(size=9, color='#9A7D0A', family='Montserrat'),
+            yaxis='y2'
+        ))
+        fig.update_layout(
+            barmode='group',
+            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+            xaxis=dict(tickfont=dict(color=CGY,size=9,family='DM Sans'),
+                       gridcolor='rgba(0,0,0,0.04)', tickangle=-30),
+            yaxis=dict(title='Employees', tickfont=dict(color=CGY,size=9,family='DM Sans'),
+                       gridcolor='rgba(0,0,0,0.05)', title_font=dict(color=CGY,size=9)),
+            yaxis2=dict(title='Participation %', tickfont=dict(color=CG,size=9,family='DM Sans'),
+                        title_font=dict(color=CG,size=9), overlaying='y', side='right',
+                        range=[0,115], showgrid=False,
+                        ticksuffix='%'),
+            legend=dict(font=dict(color=CGY,size=10,family='DM Sans'),
+                        bgcolor='rgba(0,0,0,0)', orientation='h', x=0, y=1.14),
+            margin=dict(l=10,r=60,t=40,b=70), height=360,
+            bargap=0.22, bargroupgap=0.06
+        )
+        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar':False})
 
     # Game Winners
     st.markdown('<div class="sh">🎮 Event Winners — Gold · Silver · Bronze</div>', unsafe_allow_html=True)
@@ -818,7 +993,7 @@ elif "Schedule" in page:
             st.markdown('<div class="ins">No schedule yet. Add matches using the form →</div>', unsafe_allow_html=True)
 
     with ca:
-        st.markdown('<div class="sh sh-blue">📅 Upcoming Event Results</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sh sh-blue">📅 Completed Event Results</div>', unsafe_allow_html=True)
         gw2 = get_game_winners()
         if len(gw2):
             ev_f = st.selectbox("Filter by event:", ["All Events"]+sorted(gw2['EventName'].unique().tolist()), key="sched_ef")
@@ -1207,50 +1382,52 @@ elif "Admin" in page:
         <div class="hero-sub">Birla Opus · Secure Master Data Management</div>
     </div>""", unsafe_allow_html=True)
 
-    # Auth
+    # ── Inline login bar (always visible) ────────────────────────────────
     if not st.session_state.admin_auth:
-        ac1,ac2,ac3 = st.columns([1,1.2,1])
-        with ac2:
-            st.markdown(f'<div class="card" style="text-align:center;padding:32px 24px;"><div style="font-size:2.5rem;margin-bottom:10px;">🔐</div><div style="font-family:Playfair Display,serif;font-size:1.3rem;font-weight:700;color:{CDR};margin-bottom:6px;">Authentication Required</div><div style="font-size:0.8rem;color:{CGY};">Enter admin password to manage master data</div></div>', unsafe_allow_html=True)
-            pwd = st.text_input("Password",type="password",placeholder="Enter admin password",label_visibility="collapsed")
-            if st.button("🔓  LOGIN",use_container_width=True):
+        la1,la2,la3,la4 = st.columns([2,2,1,2])
+        with la1:
+            st.markdown(f'<div style="padding-top:6px;font-size:0.8rem;color:{CGY};">🔒 Login to enable Add / Edit / Delete</div>', unsafe_allow_html=True)
+        with la2:
+            pwd = st.text_input("pwd",type="password",placeholder="Enter admin password",label_visibility="collapsed",key="admin_pwd_inline")
+        with la3:
+            if st.button("🔓 Login",use_container_width=True,key="admin_login_btn"):
                 if hashlib.sha256(pwd.encode()).hexdigest()==ADMIN_PASS:
                     st.session_state.admin_auth=True; st.rerun()
                 else: st.error("⚠️ Incorrect password.")
-            st.markdown(f'<div style="text-align:center;color:{CGY};font-size:0.7rem;margin-top:8px;">Default: <code>birlaopus2024</code></div>', unsafe_allow_html=True)
+        with la4:
+            st.markdown(f'<div style="padding-top:6px;font-size:0.7rem;color:{CGY};">Viewing in <b>read-only</b> mode</div>', unsafe_allow_html=True)
     else:
         ah1,ah2 = st.columns([5,1])
         with ah1: st.success("🔓 Admin session active · All changes save to database immediately")
         with ah2:
             if st.button("🔒 Logout"): st.session_state.admin_auth=False; st.rerun()
 
-        tabs = st.tabs(["👥 Employees","⚽ Events","🎮 Participation","📅 Schedule","📊 Scores","🏥 BMI Upload"])
+    is_admin = st.session_state.admin_auth
+    tabs = st.tabs(["👥 Employees","⚽ Events","🎮 Participation","📅 Schedule","📊 Scores","🏥 BMI Upload"])
 
-        # ── TAB 1: EMPLOYEES ──────────────────────────────────────────────────
-        with tabs[0]:
-            st.markdown(f'<div class="sh" style="margin-top:14px;">👥 Employee Master — Add / Edit / Delete / View</div>', unsafe_allow_html=True)
-
-            emp_df = q("SELECT EmployeeID,Name,Department,Designation,JoinDate FROM Employees ORDER BY Department,Name")
-
-            # Filter + Search
-            ef1, ef2 = st.columns([1.5, 2])
-            with ef1:
-                depts = ["All"] + sorted(emp_df['Department'].unique().tolist()) if len(emp_df) else ["All"]
-                dept_f = st.selectbox("Filter by Department:", depts, key="emp_df")
-            with ef2:
-                emp_search = st.text_input("🔍 Search by Name or ID:", placeholder="Type name or Employee ID...", key="emp_search")
-            show_emp = emp_df if dept_f=="All" else emp_df[emp_df['Department']==dept_f]
-            if emp_search.strip():
-                mask = (show_emp['Name'].str.contains(emp_search.strip(), case=False, na=False) |
-                        show_emp['EmployeeID'].astype(str).str.contains(emp_search.strip(), na=False))
-                show_emp = show_emp[mask]
-            st.markdown(f'<div class="ins" style="font-size:0.78rem;">Showing <b>{len(show_emp)}</b> of <b>{len(emp_df)}</b> employees</div>', unsafe_allow_html=True)
-            st.dataframe(show_emp, use_container_width=True, hide_index=True,
-                column_config={"EmployeeID": st.column_config.NumberColumn("Employee ID", format="%d")})
-
-            st.markdown("---")
-            op = st.radio("Action:", ["➕ Add New","✏️ Edit","🗑️ Delete"], horizontal=True, key="emp_op")
-
+    # ── TAB 1: EMPLOYEES ──────────────────────────────────────────────────
+    with tabs[0]:
+        st.markdown(f'<div class="sh" style="margin-top:14px;">👥 Employee Master</div>', unsafe_allow_html=True)
+        emp_df = q("SELECT EmployeeID,Name,Department,Designation,JoinDate FROM Employees ORDER BY Department,Name")
+        ef1,ef2 = st.columns([1.5,2])
+        with ef1:
+            depts = ["All"]+sorted(emp_df['Department'].unique().tolist()) if len(emp_df) else ["All"]
+            dept_f = st.selectbox("Filter by Department:",depts,key="emp_df")
+        with ef2:
+            emp_search = st.text_input("🔍 Search by Name or ID:",placeholder="Type name or Employee ID...",key="emp_search")
+        show_emp = emp_df if dept_f=="All" else emp_df[emp_df['Department']==dept_f]
+        if emp_search.strip():
+            mask = (show_emp['Name'].str.contains(emp_search.strip(),case=False,na=False)|
+                    show_emp['EmployeeID'].astype(str).str.contains(emp_search.strip(),na=False))
+            show_emp = show_emp[mask]
+        st.markdown(f'<div class="ins" style="font-size:0.78rem;">Showing <b>{len(show_emp)}</b> of <b>{len(emp_df)}</b> employees</div>', unsafe_allow_html=True)
+        st.dataframe(show_emp,use_container_width=True,hide_index=True,
+            column_config={"EmployeeID":st.column_config.NumberColumn("Employee ID",format="%d")})
+        st.markdown("---")
+        if not is_admin:
+            st.markdown(f'<div class="ins" style="font-size:0.8rem;">🔒 <b>Read-only.</b> Login as Admin to Add / Edit / Delete.</div>', unsafe_allow_html=True)
+        else:
+            op = st.radio("Action:",["➕ Add New","✏️ Edit","🗑️ Delete"],horizontal=True,key="emp_op")
             if op == "➕ Add New":
                 c1,c2,c3 = st.columns(3)
                 with c1: nid = st.number_input("Employee ID",min_value=100000,max_value=999999,value=500000,key="emp_nid")
@@ -1265,17 +1442,16 @@ elif "Admin" in page:
                 if st.button("➕ ADD EMPLOYEE",use_container_width=True):
                     if nname and ndept and ndept != "+ New Department":
                         try:
-                            conn = get_conn()
+                            conn=get_conn()
                             conn.execute("INSERT OR IGNORE INTO Employees (EmployeeID,Name,Department,Designation,JoinDate) VALUES (?,?,?,?,?)",
                                          (int(nid),nname.strip(),ndept.strip(),ndesig.strip(),''))
                             conn.commit(); conn.close()
                             st.success(f"✅ Added {nname} to {ndept}"); st.rerun()
                         except Exception as e: st.error(str(e))
                     else: st.warning("Fill all required fields.")
-
             elif op == "✏️ Edit":
                 if len(emp_df):
-                    opts = {f"{r['Name']} — {r['Department']} ({r['EmployeeID']})": r['EmployeeID'] for _,r in emp_df.iterrows()}
+                    opts = {f"{r['Name']} — {r['Department']} ({r['EmployeeID']})":r['EmployeeID'] for _,r in emp_df.iterrows()}
                     sel = st.selectbox("Select Employee to Edit:",list(opts.keys()),key="emp_edit_sel")
                     eid = opts[sel]
                     cur = emp_df[emp_df['EmployeeID']==eid].iloc[0]
@@ -1284,49 +1460,46 @@ elif "Admin" in page:
                     with ec2:
                         all_depts = sorted(emp_df['Department'].unique().tolist())
                         udept = st.selectbox("Department",all_depts,index=all_depts.index(cur['Department']) if cur['Department'] in all_depts else 0,key="emp_udept")
-                    with ec3: udesig = st.text_input("Designation",value=str(cur['Designation']) if str(cur['Designation']) != 'nan' else '',key="emp_udesig")
+                    with ec3: udesig = st.text_input("Designation",value=str(cur['Designation']) if str(cur['Designation'])!='nan' else '',key="emp_udesig")
                     if st.button("💾 SAVE CHANGES",use_container_width=True):
-                        conn=get_conn()
-                        conn.execute("UPDATE Employees SET Name=?,Department=?,Designation=? WHERE EmployeeID=?",(uname,udept,udesig,eid))
-                        conn.commit(); conn.close()
-                        st.success(f"✅ Updated {uname}"); st.rerun()
-
+                        conn=get_conn(); conn.execute("UPDATE Employees SET Name=?,Department=?,Designation=? WHERE EmployeeID=?",(uname.strip(),udept,udesig.strip(),eid))
+                        conn.commit(); conn.close(); st.success("✅ Updated!"); st.rerun()
             elif op == "🗑️ Delete":
                 if len(emp_df):
-                    opts2 = {f"{r['Name']} — {r['Department']} ({r['EmployeeID']})": r['EmployeeID'] for _,r in emp_df.iterrows()}
+                    opts2 = {f"{r['Name']} — {r['Department']} ({r['EmployeeID']})":r['EmployeeID'] for _,r in emp_df.iterrows()}
                     sel2 = st.selectbox("Select Employee to Delete:",list(opts2.keys()),key="emp_del_sel")
                     eid2 = opts2[sel2]
-                    st.warning(f"⚠️ This will permanently delete this employee and their participation records.")
-                    if st.button("🗑️ CONFIRM DELETE",use_container_width=True):
+                    st.warning(f"⚠️ This will permanently delete the employee and all their data.")
+                    if st.button("🗑️ DELETE EMPLOYEE",use_container_width=True):
                         conn=get_conn()
                         conn.execute("DELETE FROM Employees WHERE EmployeeID=?",(eid2,))
                         conn.execute("DELETE FROM Participation WHERE EmployeeID=?",(eid2,))
                         conn.execute("DELETE FROM Scores WHERE EmployeeID=?",(eid2,))
-                        conn.execute("DELETE FROM BMI WHERE EmployeeID=?",(eid2,))
-                        conn.commit(); conn.close()
-                        st.success("✅ Deleted."); st.rerun()
+                        conn.commit(); conn.close(); st.success("✅ Deleted."); st.rerun()
 
-        # ── TAB 2: EVENTS ──────────────────────────────────────────────────────
-        with tabs[1]:
-            st.markdown(f'<div class="sh" style="margin-top:14px;">⚽ Event Master — Add / Edit / Delete / View</div>', unsafe_allow_html=True)
-            ev_df = q("SELECT EventID,EventName,Type,Difficulty,Multiplier,PrizeWinner,PrizeRunnerUp,Prize2ndRunnerUp FROM Events ORDER BY EventName")
-            st.dataframe(ev_df, use_container_width=True, hide_index=True,
-                column_config={
-                    "EventID": st.column_config.NumberColumn("ID",format="%d"),
-                    "Multiplier": st.column_config.NumberColumn("Multiplier",format="%.1f"),
-                    "PrizeWinner": st.column_config.TextColumn("🥇 Prize (Winner)"),
-                    "PrizeRunnerUp": st.column_config.TextColumn("🥈 Prize (Runner-up)"),
-                    "Prize2ndRunnerUp": st.column_config.TextColumn("🥉 Prize (2nd R-up)"),
-                })
-            st.markdown("---")
+    # ── TAB 2: EVENTS ─────────────────────────────────────────────────────
+    with tabs[1]:
+        st.markdown(f'<div class="sh" style="margin-top:14px;">⚽ Event Master</div>', unsafe_allow_html=True)
+        ev_df = q("SELECT EventID,EventName,Type,Difficulty,Multiplier,PrizeWinner,PrizeRunnerUp,Prize2ndRunnerUp FROM Events ORDER BY EventName")
+        st.dataframe(ev_df,use_container_width=True,hide_index=True,
+            column_config={
+                "EventID":st.column_config.NumberColumn("ID",format="%d"),
+                "Multiplier":st.column_config.NumberColumn("Multiplier",format="%.1f"),
+                "PrizeWinner":st.column_config.TextColumn("🥇 Prize (Winner)"),
+                "PrizeRunnerUp":st.column_config.TextColumn("🥈 Prize (Runner-up)"),
+                "Prize2ndRunnerUp":st.column_config.TextColumn("🥉 Prize (2nd R-up)"),
+            })
+        st.markdown("---")
+        if not is_admin:
+            st.markdown(f'<div class="ins" style="font-size:0.8rem;">🔒 <b>Read-only.</b> Login as Admin to Add / Edit / Delete.</div>', unsafe_allow_html=True)
+        else:
             ev_op = st.radio("Action:",["➕ Add New","✏️ Edit","🗑️ Delete"],horizontal=True,key="ev_op")
-
             if ev_op == "➕ Add New":
                 ec1,ec2,ec3,ec4 = st.columns(4)
                 with ec1: ev_nm = st.text_input("Event Name",placeholder="e.g. Football",key="ev_nm")
                 with ec2: ev_tp = st.selectbox("Type",["Indoor","Outdoor"],key="ev_tp")
                 with ec3: ev_df2 = st.selectbox("Difficulty",["Casual","Medium","High"],key="ev_df2")
-                with ec4: ev_ml = st.number_input("Multiplier",min_value=0.5,max_value=5.0,value=1.0,step=0.1,key="ev_ml")
+                with ec4: ev_ml = st.number_input("Multiplier",value=1.0,min_value=0.5,max_value=5.0,step=0.1,key="ev_ml")
                 ep1,ep2,ep3 = st.columns(3)
                 with ep1: ev_pw  = st.text_input("🥇 Prize for Winner",placeholder="e.g. Trophy + ₹5000",key="ev_pw")
                 with ep2: ev_pru = st.text_input("🥈 Prize for Runner-up",placeholder="e.g. Medal + ₹2000",key="ev_pru")
@@ -1340,10 +1513,9 @@ elif "Admin" in page:
                             conn.commit(); conn.close()
                             st.success(f"✅ Added event: {ev_nm}"); st.rerun()
                         except Exception as e: st.error(str(e))
-
             elif ev_op == "✏️ Edit":
                 if len(ev_df):
-                    ev_opts = {r['EventName']:r['EventID'] for _,r in ev_df.iterrows()}
+                    ev_opts = {r['EventName']:r['EventName'] for _,r in ev_df.iterrows()}
                     sel_ev = st.selectbox("Select Event:",list(ev_opts.keys()),key="ev_edit_sel")
                     cur_ev = ev_df[ev_df['EventName']==sel_ev].iloc[0]
                     eec1,eec2,eec3 = st.columns(3)
@@ -1351,95 +1523,85 @@ elif "Admin" in page:
                     with eec2: udf = st.selectbox("Difficulty",["Casual","Medium","High"],index=["Casual","Medium","High"].index(cur_ev['Difficulty']) if cur_ev['Difficulty'] in ["Casual","Medium","High"] else 0,key="ev_udf")
                     with eec3: uml = st.number_input("Multiplier",value=float(cur_ev['Multiplier']),min_value=0.5,max_value=5.0,step=0.1,key="ev_uml")
                     eep1,eep2,eep3 = st.columns(3)
-                    with eep1: upw  = st.text_input("🥇 Prize Winner",  value=str(cur_ev.get('PrizeWinner','') or ''),  key="ev_upw")
+                    with eep1: upw  = st.text_input("🥇 Prize Winner",value=str(cur_ev.get('PrizeWinner','') or ''),key="ev_upw")
                     with eep2: upru = st.text_input("🥈 Prize Runner-up",value=str(cur_ev.get('PrizeRunnerUp','') or ''),key="ev_upru")
-                    with eep3: up2r = st.text_input("🥉 Prize 2nd R-up", value=str(cur_ev.get('Prize2ndRunnerUp','') or ''),key="ev_up2r")
+                    with eep3: up2r = st.text_input("🥉 Prize 2nd R-up",value=str(cur_ev.get('Prize2ndRunnerUp','') or ''),key="ev_up2r")
                     if st.button("💾 SAVE EVENT",use_container_width=True):
                         conn=get_conn()
                         conn.execute("UPDATE Events SET Type=?,Difficulty=?,Multiplier=?,PrizeWinner=?,PrizeRunnerUp=?,Prize2ndRunnerUp=? WHERE EventName=?",
                                      (utp,udf,uml,upw,upru,up2r,sel_ev))
                         conn.commit(); conn.close(); st.success("✅ Updated!"); st.rerun()
-
             elif ev_op == "🗑️ Delete":
                 if len(ev_df):
                     ev_opts2 = {r['EventName']:r['EventID'] for _,r in ev_df.iterrows()}
-                    sel_ev2 = st.selectbox("Select Event to Delete:",list(ev_opts2.keys()),key="ev_del_sel")
-                    st.warning("⚠️ This will delete the event. Participation records referencing it will remain.")
-                    if st.button("🗑️ CONFIRM DELETE EVENT",use_container_width=True):
-                        conn=get_conn(); conn.execute("DELETE FROM Events WHERE EventName=?",(sel_ev2,))
+                    ev_sel2 = st.selectbox("Select Event to Delete:",list(ev_opts2.keys()),key="ev_del_sel")
+                    ev_id2 = ev_opts2[ev_sel2]
+                    if st.button("🗑️ DELETE EVENT",use_container_width=True):
+                        conn=get_conn(); conn.execute("DELETE FROM Events WHERE EventID=?",(ev_id2,))
                         conn.commit(); conn.close(); st.success("✅ Deleted."); st.rerun()
 
-        # ── TAB 3: PARTICIPATION ───────────────────────────────────────────────
-        with tabs[2]:
-            st.markdown(f'<div class="sh" style="margin-top:14px;">🎮 Participation Entry — Add / Edit / Delete / View</div>', unsafe_allow_html=True)
-            part_df = q("SELECT PID,EmployeeName,EventName,Date,Position,FinalPoints FROM Participation ORDER BY Date DESC")
-
-            # Filter + Search
-            pf1, pf2 = st.columns([1.5, 2])
-            with pf1:
-                ev_names_p = ["All"] + sorted(part_df['EventName'].unique().tolist()) if len(part_df) else ["All"]
-                pf = st.selectbox("Filter by Event:",ev_names_p,key="part_ef")
-            with pf2:
-                part_search = st.text_input("🔍 Search by Name:", placeholder="Type employee name...", key="part_search")
-            show_part = part_df if pf=="All" else part_df[part_df['EventName']==pf]
-            if part_search.strip():
-                show_part = show_part[show_part['EmployeeName'].str.contains(part_search.strip(), case=False, na=False)]
-            st.dataframe(show_part, use_container_width=True, hide_index=True,
-                column_config={"FinalPoints": st.column_config.NumberColumn("Final Points", format="%d")})
-            st.markdown(f'<div class="ins" style="font-size:0.78rem;">{len(show_part)} records shown</div>', unsafe_allow_html=True)
-
-            st.markdown("---")
+    # ── TAB 3: PARTICIPATION ──────────────────────────────────────────────
+    with tabs[2]:
+        st.markdown(f'<div class="sh" style="margin-top:14px;">🎮 Participation Records</div>', unsafe_allow_html=True)
+        part_df = q("SELECT PID,EmployeeID,EmployeeName,EventName,Position,FinalPoints,Date FROM Participation ORDER BY Date DESC,EmployeeName")
+        pf1,pf2 = st.columns([1.5,2])
+        with pf1:
+            ev_names_p = ["All"]+sorted(part_df['EventName'].unique().tolist()) if len(part_df) else ["All"]
+            pf = st.selectbox("Filter by Event:",ev_names_p,key="part_ef")
+        with pf2:
+            part_search = st.text_input("🔍 Search by Name:",placeholder="Type employee name...",key="part_search")
+        show_part = part_df if pf=="All" else part_df[part_df['EventName']==pf]
+        if part_search.strip():
+            show_part = show_part[show_part['EmployeeName'].str.contains(part_search.strip(),case=False,na=False)]
+        st.dataframe(show_part,use_container_width=True,hide_index=True,
+            column_config={"FinalPoints":st.column_config.NumberColumn("Final Points",format="%d")})
+        st.markdown(f'<div class="ins" style="font-size:0.78rem;">{len(show_part)} records shown</div>', unsafe_allow_html=True)
+        st.markdown("---")
+        if not is_admin:
+            st.markdown(f'<div class="ins" style="font-size:0.8rem;">🔒 <b>Read-only.</b> Login as Admin to Add / Edit / Delete.</div>', unsafe_allow_html=True)
+        else:
             pop = st.radio("Action:",["➕ Add Entry","✏️ Edit Entry","🗑️ Delete Entry"],horizontal=True,key="part_op")
-
             emp_all = q("SELECT EmployeeID,Name,Department FROM Employees ORDER BY Name")
             ev_all  = q("SELECT EventName,Multiplier FROM Events")
             emp_opts = {f"{r['Name']} — {r['Department']}": (r['EmployeeID'],r['Name'],r['Department']) for _,r in emp_all.iterrows()}
-
             if pop == "➕ Add Entry":
-                pc1,pc2,pc3 = st.columns(3)
-                with pc1: pe_sel = st.selectbox("Employee",list(emp_opts.keys()),key="part_emp")
-                with pc2: pe_ev  = st.selectbox("Event",ev_all['EventName'].tolist(),key="part_ev")
-                with pc3: pe_pos = st.selectbox("Position",["Winner","Runner-up","2nd Runner-up","Semi","Quarter","Participant"],key="part_pos")
-                pc4,pc5,pc6 = st.columns(3)
-                base_map = {"Winner":100,"Runner-up":70,"2nd Runner-up":50,"Semi":30,"Quarter":20,"Participant":0}
-                ev_mult_row = ev_all[ev_all['EventName']==pe_ev]
-                ev_mult = float(ev_mult_row.iloc[0]['Multiplier']) if len(ev_mult_row) else 1.0
-                with pc4: pe_part_pts = st.number_input("Participation Pts",value=10,min_value=0,key="part_pp")
-                with pc5: pe_base = st.number_input("Base Points",value=base_map.get(pe_pos,0),min_value=0,key="part_bp")
-                with pc6: pe_date = st.date_input("Date",value=date.today(),key="part_dt")
-                gpts = pe_base * ev_mult; fpts = gpts + pe_part_pts
-                st.markdown(f'<div class="ins">Auto-calculated: Game Pts = {pe_base} × {ev_mult} = <b>{gpts}</b> &nbsp;|&nbsp; Final = <b>{fpts}</b></div>', unsafe_allow_html=True)
-
-                if st.button("✅ ADD PARTICIPATION",use_container_width=True):
-                    eid_p, ename_p, edept_p = emp_opts[pe_sel]
+                pa1,pa2,pa3 = st.columns(3)
+                with pa1:
+                    emp_sel = st.selectbox("Employee:",list(emp_opts.keys()),key="part_emp")
+                    emp_id_v,emp_nm_v,emp_dp_v = emp_opts[emp_sel]
+                with pa2:
+                    ev_sel = st.selectbox("Event:",ev_all['EventName'].tolist() if len(ev_all) else [],key="part_ev")
+                    ev_row = ev_all[ev_all['EventName']==ev_sel].iloc[0] if len(ev_all) and ev_sel else None
+                    ev_ml_v = float(ev_row['Multiplier']) if ev_row is not None else 1.0
+                with pa3:
+                    p_pos = st.selectbox("Position:",["Participant","Winner","Runner-up","2nd Runner-up","Semi","Quarter"],key="part_pos")
+                    p_date = st.date_input("Date:",value=date.today(),key="part_date")
+                p_ppts = st.number_input("Participation Points",value=10,min_value=0,key="part_ppts")
+                p_base = st.number_input("Base Points",value=50 if p_pos=="Winner" else 30 if p_pos=="Runner-up" else 20 if p_pos=="2nd Runner-up" else 0,min_value=0,key="part_base")
+                p_gpts = round(p_base*ev_ml_v,1)
+                p_fpts = p_gpts + p_ppts
+                st.markdown(f'<div class="ins">GamePoints={p_gpts} + ParticipationPoints={p_ppts} = <b>FinalPoints={p_fpts}</b></div>', unsafe_allow_html=True)
+                if st.button("➕ ADD ENTRY",use_container_width=True):
                     conn=get_conn()
-                    try:
-                        conn.execute("""INSERT INTO Participation
-                            (EmployeeID,EmployeeName,EventName,Date,Position,Registered,Participated,
-                             ParticipationPoints,BasePoints,Multiplier,GamePoints,FinalPoints)
-                            VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
-                            (eid_p,ename_p,pe_ev,str(pe_date),pe_pos,'Yes','Yes',
-                             pe_part_pts,pe_base,ev_mult,gpts,fpts))
-                        recalc_score(eid_p, conn)
-                        conn.commit()
-                        st.success(f"✅ Added! Total score for {ename_p} recalculated."); st.rerun()
-                    except Exception as e: st.error(str(e))
-                    finally: conn.close()
-
+                    conn.execute("INSERT INTO Participation (EmployeeID,EmployeeName,EventName,Date,Position,Registered,Participated,ParticipationPoints,BasePoints,Multiplier,GamePoints,FinalPoints) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+                                 (int(emp_id_v),emp_nm_v,ev_sel,p_date.isoformat(),p_pos,'Yes','Yes',p_ppts,p_base,ev_ml_v,p_gpts,p_fpts))
+                    conn.commit()
+                    recalc_score(int(emp_id_v),conn)
+                    conn.commit(); conn.close()
+                    st.success(f"✅ Added! Score auto-updated."); st.rerun()
             elif pop == "✏️ Edit Entry":
                 if len(part_df):
-                    pid_opts = {f"#{r['PID']} — {r['EmployeeName']} · {r['EventName']} · {r['Position']}": r['PID'] for _,r in part_df.iterrows()}
-                    sel_pid = st.selectbox("Select Record:",list(pid_opts.keys()),key="part_edit_sel")
-                    pid = pid_opts[sel_pid]
-                    cur_p = q(f"SELECT * FROM Participation WHERE PID={pid}").iloc[0]
-                    epc1,epc2,epc3 = st.columns(3)
-                    with epc1: up_pos = st.selectbox("Position",["Winner","Runner-up","2nd Runner-up","Semi","Quarter","Participant"],
-                                                      index=["Winner","Runner-up","2nd Runner-up","Semi","Quarter","Participant"].index(cur_p['Position']) if cur_p['Position'] in ["Winner","Runner-up","2nd Runner-up","Semi","Quarter","Participant"] else 5,key="part_upos")
-                    with epc2: up_base = st.number_input("Base Points",value=int(cur_p['BasePoints']),min_value=0,key="part_ubp")
-                    with epc3: up_ppts = st.number_input("Participation Pts",value=int(cur_p['ParticipationPoints']),min_value=0,key="part_upp")
-                    up_mult = float(cur_p['Multiplier'])
-                    up_gpts = up_base * up_mult; up_fpts = up_gpts + up_ppts
-                    st.markdown(f'<div class="ins">Recalculated Final = <b>{up_fpts} pts</b></div>', unsafe_allow_html=True)
+                    p_opts = {f"#{r['PID']} — {r['EmployeeName']} · {r['EventName']} · {r['Position']}":r['PID'] for _,r in part_df.iterrows()}
+                    p_sel = st.selectbox("Select Entry:",list(p_opts.keys()),key="part_edit_sel")
+                    pid = p_opts[p_sel]
+                    cur_p = part_df[part_df['PID']==pid].iloc[0]
+                    up_pos = st.selectbox("Position:",["Participant","Winner","Runner-up","2nd Runner-up","Semi","Quarter"],
+                                          index=["Participant","Winner","Runner-up","2nd Runner-up","Semi","Quarter"].index(cur_p['Position']) if cur_p['Position'] in ["Participant","Winner","Runner-up","2nd Runner-up","Semi","Quarter"] else 0,key="part_upos")
+                    upc1,upc2,upc3,upc4 = st.columns(4)
+                    with upc1: up_ppts = st.number_input("Part.Points",value=int(q(f"SELECT ParticipationPoints FROM Participation WHERE PID={pid}").iloc[0][0]),key="up_ppts")
+                    with upc2: up_base = st.number_input("BasePoints",value=int(q(f"SELECT BasePoints FROM Participation WHERE PID={pid}").iloc[0][0]),key="up_base")
+                    with upc3: up_gpts = st.number_input("GamePoints",value=int(q(f"SELECT GamePoints FROM Participation WHERE PID={pid}").iloc[0][0]),key="up_gpts")
+                    with upc4: up_fpts = st.number_input("FinalPoints",value=int(q(f"SELECT FinalPoints FROM Participation WHERE PID={pid}").iloc[0][0]),key="up_fpts")
                     if st.button("💾 SAVE ENTRY",use_container_width=True):
                         conn=get_conn()
                         conn.execute("UPDATE Participation SET Position=?,BasePoints=?,ParticipationPoints=?,GamePoints=?,FinalPoints=? WHERE PID=?",
@@ -1448,35 +1610,32 @@ elif "Admin" in page:
                         recalc_score(int(cur_p['EmployeeID']),conn)
                         conn.commit(); conn.close()
                         st.success(f"✅ Entry updated! Score auto-synced to Scores tab."); st.rerun()
-
             elif pop == "🗑️ Delete Entry":
                 if len(part_df):
-                    pid_opts2 = {f"#{r['PID']} — {r['EmployeeName']} · {r['EventName']}": r['PID'] for _,r in part_df.iterrows()}
-                    sel_pid2 = st.selectbox("Select to Delete:",list(pid_opts2.keys()),key="part_del_sel")
-                    pid2 = pid_opts2[sel_pid2]
-                    emp_id_del = part_df[part_df['PID']==pid2].iloc[0]
+                    p_opts2 = {f"#{r['PID']} — {r['EmployeeName']} · {r['EventName']}":r['PID'] for _,r in part_df.iterrows()}
+                    p_sel2 = st.selectbox("Select to Delete:",list(p_opts2.keys()),key="part_del_sel")
+                    pid2 = p_opts2[p_sel2]
+                    emp_id_to_recalc = part_df[part_df['PID']==pid2]['EmployeeID'].values
                     if st.button("🗑️ DELETE ENTRY",use_container_width=True):
-                        # Get employee ID before deleting
-                        emp_id_to_recalc = part_df[part_df['PID']==pid2]['EmployeeID'].values
                         conn=get_conn()
                         conn.execute("DELETE FROM Participation WHERE PID=?",(pid2,))
                         conn.commit()
-                        # Recalculate score after deletion
                         if len(emp_id_to_recalc):
-                            recalc_score(int(emp_id_to_recalc[0]), conn)
-                            conn.commit()
-                        conn.close()
-                        st.success("✅ Deleted and score updated."); st.rerun()
+                            recalc_score(int(emp_id_to_recalc[0]),conn); conn.commit()
+                        conn.close(); st.success("✅ Deleted and score updated."); st.rerun()
 
-        # ── TAB 4: SCHEDULE ────────────────────────────────────────────────────
-        with tabs[3]:
-            st.markdown(f'<div class="sh" style="margin-top:14px;">📅 Schedule — Add / Edit Status / Delete</div>', unsafe_allow_html=True)
-            sched_df = q("SELECT * FROM Schedule ORDER BY StartTime ASC")
-            if len(sched_df): st.dataframe(sched_df, use_container_width=True, hide_index=True)
-            st.markdown("---")
+    # ── TAB 4: SCHEDULE ───────────────────────────────────────────────────
+    with tabs[3]:
+        st.markdown(f'<div class="sh" style="margin-top:14px;">📅 Match Schedule</div>', unsafe_allow_html=True)
+        sched_df = q("SELECT SID,EventName,StartTime,Status,Venue,Notes FROM Schedule ORDER BY StartTime ASC")
+        if len(sched_df): st.dataframe(sched_df,use_container_width=True,hide_index=True)
+        else: st.markdown(f'<div class="ins">No schedule entries yet.</div>', unsafe_allow_html=True)
+        st.markdown("---")
+        if not is_admin:
+            st.markdown(f'<div class="ins" style="font-size:0.8rem;">🔒 <b>Read-only.</b> Login as Admin to Add / Edit / Delete.</div>', unsafe_allow_html=True)
+        else:
             sop = st.radio("Action:",["➕ Add Match","✏️ Update Status","🗑️ Delete"],horizontal=True,key="sched_op")
             ev_names_s = q("SELECT EventName FROM Events")['EventName'].tolist()
-
             if sop == "➕ Add Match":
                 sa1,sa2 = st.columns(2)
                 with sa1:
@@ -1484,21 +1643,20 @@ elif "Admin" in page:
                     if s_ev=="Other...": s_ev = st.text_input("Custom event name",key="sched_ev_cust")
                     s_stat = st.selectbox("Status",["Upcoming","Live","Completed","Postponed"],key="sched_stat")
                 with sa2:
-                    sd,st2 = st.columns(2)
-                    with sd: s_date = st.date_input("Date",value=date.today(),key="sched_date")
-                    with st2: s_time = st.time_input("Time",key="sched_time")
-                    s_venue = st.text_input("Venue",placeholder="e.g. Main Hall",key="sched_venue")
+                    s_date = st.date_input("Date",value=date.today(),key="sched_date")
+                    s_time = st.time_input("Time",key="sched_time")
+                    s_venue = st.text_input("Venue",placeholder="e.g. Sports Ground",key="sched_venue")
                 s_notes = st.text_input("Notes (optional)",key="sched_notes")
-                if st.button("📅 ADD TO SCHEDULE",use_container_width=True):
-                    sdt = datetime.combine(s_date,s_time).isoformat()
+                if st.button("➕ ADD TO SCHEDULE",use_container_width=True):
+                    from datetime import datetime as dt_cls
+                    sdt = dt_cls.combine(s_date,s_time).isoformat()
                     conn=get_conn()
                     conn.execute("INSERT INTO Schedule (EventName,StartTime,Status,Venue,Notes) VALUES (?,?,?,?,?)",(s_ev,sdt,s_stat,s_venue,s_notes))
                     conn.commit(); conn.close()
                     st.success("✅ Added to schedule!"); st.rerun()
-
             elif sop == "✏️ Update Status":
                 if len(sched_df):
-                    s_opts = {f"{r['EventName']} — {str(r['StartTime'])[:16]}": r['SID'] for _,r in sched_df.iterrows()}
+                    s_opts = {f"{r['EventName']} — {str(r['StartTime'])[:16]}":r['SID'] for _,r in sched_df.iterrows()}
                     s_sel = st.selectbox("Select Match:",list(s_opts.keys()),key="sched_edit_sel")
                     s_sid = s_opts[s_sel]
                     cur_stat = sched_df[sched_df['SID']==s_sid].iloc[0]['Status']
@@ -1507,185 +1665,128 @@ elif "Admin" in page:
                     if st.button("💾 UPDATE STATUS",use_container_width=True):
                         conn=get_conn(); conn.execute("UPDATE Schedule SET Status=? WHERE SID=?",(new_stat,s_sid))
                         conn.commit(); conn.close(); st.success("✅ Status updated!"); st.rerun()
-
             elif sop == "🗑️ Delete":
                 if len(sched_df):
-                    s_opts3 = {f"{r['EventName']} — {str(r['StartTime'])[:16]}": r['SID'] for _,r in sched_df.iterrows()}
+                    s_opts3 = {f"{r['EventName']} — {str(r['StartTime'])[:16]}":r['SID'] for _,r in sched_df.iterrows()}
                     s_sel3 = st.selectbox("Select to Delete:",list(s_opts3.keys()),key="sched_del_sel")
                     s_sid3 = s_opts3[s_sel3]
                     if st.button("🗑️ DELETE MATCH",use_container_width=True):
                         conn=get_conn(); conn.execute("DELETE FROM Schedule WHERE SID=?",(s_sid3,))
                         conn.commit(); conn.close(); st.success("✅ Deleted."); st.rerun()
 
-        # ── TAB 5: SCORES ──────────────────────────────────────────────────────
-        with tabs[4]:
-            st.markdown(f'<div class="sh" style="margin-top:14px;">📊 Scores & Leaderboard</div>', unsafe_allow_html=True)
-            sc_df = get_leaderboard()
-            sc_search = st.text_input("🔍 Search by Name or Department:", placeholder="Type to filter...", key="sc_search")
-            show_sc = sc_df
-            if sc_search.strip():
-                show_sc = sc_df[sc_df['Name'].str.contains(sc_search.strip(), case=False, na=False) |
-                                sc_df['Department'].str.contains(sc_search.strip(), case=False, na=False)]
-            sc_df_display = show_sc
-            st.dataframe(sc_df_display, use_container_width=True, hide_index=True,
-                column_config={
-                    "TotalPoints": st.column_config.NumberColumn("Points 🏆", format="%d"),
-                    "EmployeeID":  st.column_config.NumberColumn("Employee ID", format="%d"),
-                })
-            st.markdown(f'<div class="ins" style="font-size:0.78rem;">Showing <b>{len(sc_df_display)}</b> of <b>{len(sc_df)}</b> employees</div>', unsafe_allow_html=True)
-
-            st.markdown("---")
+    # ── TAB 5: SCORES ─────────────────────────────────────────────────────
+    with tabs[4]:
+        st.markdown(f'<div class="sh" style="margin-top:14px;">📊 Scores & Leaderboard</div>', unsafe_allow_html=True)
+        sc_df = get_leaderboard()
+        sc_search = st.text_input("🔍 Search by Name or Department:",placeholder="Type to filter...",key="sc_search")
+        show_sc = sc_df
+        if sc_search.strip():
+            show_sc = sc_df[sc_df['Name'].str.contains(sc_search.strip(),case=False,na=False)|
+                            sc_df['Department'].str.contains(sc_search.strip(),case=False,na=False)]
+        sc_df_display = show_sc
+        st.dataframe(sc_df_display,use_container_width=True,hide_index=True,
+            column_config={
+                "TotalPoints":st.column_config.NumberColumn("Points 🏆",format="%d"),
+                "EmployeeID": st.column_config.NumberColumn("Employee ID",format="%d"),
+            })
+        st.markdown(f'<div class="ins" style="font-size:0.78rem;">Showing <b>{len(sc_df_display)}</b> of <b>{len(sc_df)}</b> employees</div>', unsafe_allow_html=True)
+        st.markdown("---")
+        if not is_admin:
+            st.markdown(f'<div class="ins" style="font-size:0.8rem;">🔒 <b>Read-only.</b> Login as Admin to override scores or sync data.</div>', unsafe_allow_html=True)
+        else:
             st.markdown('<div class="sh">✏️ Override Score Manually</div>', unsafe_allow_html=True)
             if len(sc_df):
-                sc_opts = {f"{r['Name']} — {r['Department']}": r['EmployeeID'] for _,r in sc_df.iterrows()}
+                sc_opts = {f"{r['Name']} — {r['Department']}":r['EmployeeID'] for _,r in sc_df.iterrows()}
                 sc_sel = st.selectbox("Employee:",list(sc_opts.keys()),key="sc_sel")
                 sc_eid = sc_opts[sc_sel]
                 cur_sc = sc_df[sc_df['EmployeeID']==sc_eid].iloc[0]['TotalPoints']
                 sc_val = st.number_input("New Score",value=int(cur_sc),min_value=0,max_value=99999,key="sc_val")
-                st.markdown(f'<div class="ins" style="font-size:0.8rem;">⚠️ Manual override bypasses participation calculation. Use only for corrections.</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="ins" style="font-size:0.8rem;">⚠️ Manual override bypasses participation calculation.</div>', unsafe_allow_html=True)
                 if st.button("💾 OVERRIDE SCORE",use_container_width=True):
                     conn=get_conn()
                     conn.execute("UPDATE Scores SET Score=?,LastUpdated=? WHERE EmployeeID=?",(sc_val,date.today().isoformat(),sc_eid))
                     conn.commit(); conn.close()
                     st.success(f"✅ Score updated to {sc_val}"); st.rerun()
-
             st.markdown("---")
             if st.button("📥 EXPORT LEADERBOARD CSV",use_container_width=True):
                 st.download_button("⬇️ Download",sc_df.to_csv(index=False),"leaderboard.csv","text/csv",use_container_width=True)
-
             st.markdown("---")
             st.markdown('<div class="sh">🔄 One-Time Master Data Sync from Excel</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="ins" style="font-size:0.8rem;">Use this to load data from <b>Employee_Wellness_Scoring_System.xlsx</b> into the database.<br>Place the Excel file in the <b>same folder as app.py</b> then click sync. This will add new records without deleting existing ones.</div>', unsafe_allow_html=True)
-            sync_path = st.text_input("Excel file path (optional)", placeholder="Leave blank if Excel is in same folder as app.py", key="sync_path_input")
-            if st.button("🔄 SYNC FROM EXCEL NOW", use_container_width=True):
+            st.markdown(f'<div class="ins" style="font-size:0.8rem;">Place Excel file in same folder as app.py then click sync. Adds new records without deleting existing ones.</div>', unsafe_allow_html=True)
+            sync_path = st.text_input("Excel file path (optional)",placeholder="Leave blank if Excel is in same folder as app.py",key="sync_path_input")
+            if st.button("🔄 SYNC FROM EXCEL NOW",use_container_width=True):
                 import pathlib
-                final_path = sync_path.strip() if sync_path.strip() else "Employee_Wellness_Scoring_System.xlsx"
-                # Also try same directory as app.py
-                if not os.path.exists(final_path):
-                    app_dir = str(pathlib.Path(__file__).parent / "Employee_Wellness_Scoring_System.xlsx")
-                    if os.path.exists(app_dir):
-                        final_path = app_dir
-                if not os.path.exists(final_path):
-                    st.error(f"❌ Excel file not found at: {os.path.abspath(final_path)}\nPlease place Employee_Wellness_Scoring_System.xlsx in the same folder as app.py")
-                else:
-                    result = seed_initial_data(final_path)
-                    if result and result[0]:
-                        st.success(f"✅ Data synced successfully from Excel!")
-                    else:
-                        err = result[1] if result else "Unknown error"
-                        st.error(f"❌ Sync failed: {err}")
-                    st.rerun()
+                ep = sync_path.strip() if sync_path.strip() else str(pathlib.Path(__file__).parent/"Employee_Wellness_Scoring_System.xlsx")
+                ok,msg = seed_initial_data(ep)
+                if ok: st.success(f"✅ {msg}")
+                else: st.error(f"❌ Sync failed: {msg}")
+                st.rerun()
 
-        # ── TAB 6: BMI UPLOAD ──────────────────────────────────────────────────
-        with tabs[5]:
-            st.markdown(f'<div class="sh" style="margin-top:14px;">🏥 BMI Data Upload — Excel Template</div>', unsafe_allow_html=True)
-
-            # Template download
-            st.markdown(f'<div class="ins ins-green">📥 <b>Step 1:</b> Download the blank template → fill Weight & Height → upload below.<br>BMI will be auto-calculated. You can upload monthly — duplicates will be updated.</div>', unsafe_allow_html=True)
-
-            emp_list = q("SELECT EmployeeID,Name,Department FROM Employees ORDER BY Name")
-            if len(emp_list):
-                template_df = pd.DataFrame({
-                    'Employee_ID':   emp_list['EmployeeID'].tolist(),
-                    'Employee_Name': emp_list['Name'].tolist(),
-                    'Department':    emp_list['Department'].tolist(),
-                    'Month':         ['March'] * len(emp_list),
-                    'Year':          [2026] * len(emp_list),
-                    'Weight_kg':     [''] * len(emp_list),
-                    'Height_cm':     [''] * len(emp_list),
-                })
-                buf = io.BytesIO()
-                with pd.ExcelWriter(buf, engine='openpyxl') as writer:
-                    template_df.to_excel(writer, index=False, sheet_name='BMI_Data')
-                st.download_button(
-                    "📥 DOWNLOAD BMI TEMPLATE",
-                    buf.getvalue(),
-                    "BMI_Template.xlsx",
-                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    use_container_width=True
-                )
-
+    # ── TAB 6: BMI UPLOAD ─────────────────────────────────────────────────
+    with tabs[5]:
+        st.markdown(f'<div class="sh" style="margin-top:14px;">🏥 BMI Data — View & Upload</div>', unsafe_allow_html=True)
+        bmi_view = q("SELECT EmployeeName,Department,Month,Year,Weight_kg,Height_cm,ROUND(BMI,2) AS BMI,Category FROM BMI ORDER BY Year DESC,Month,EmployeeName")
+        if len(bmi_view):
+            st.dataframe(bmi_view,use_container_width=True,hide_index=True)
+            st.markdown(f'<div class="ins" style="font-size:0.78rem;">{len(bmi_view)} BMI records on file</div>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<div class="ins">No BMI data uploaded yet.</div>', unsafe_allow_html=True)
+        st.markdown("---")
+        emp_list = q("SELECT EmployeeID,Name,Department FROM Employees ORDER BY Name")
+        if len(emp_list):
+            template_df = pd.DataFrame({
+                'Employee_ID':   emp_list['EmployeeID'].tolist(),
+                'Employee_Name': emp_list['Name'].tolist(),
+                'Department':    emp_list['Department'].tolist(),
+                'Month':         ['March']*len(emp_list),
+                'Year':          [2026]*len(emp_list),
+                'Weight_kg':     ['']*len(emp_list),
+                'Height_cm':     ['']*len(emp_list),
+            })
+            buf = io.BytesIO()
+            with pd.ExcelWriter(buf,engine='openpyxl') as writer:
+                template_df.to_excel(writer,index=False,sheet_name='BMI_Data')
+            st.download_button("📥 DOWNLOAD BMI TEMPLATE",buf.getvalue(),"BMI_Template.xlsx",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",use_container_width=True)
+        if not is_admin:
+            st.markdown(f'<div class="ins" style="font-size:0.8rem;">🔒 <b>Read-only.</b> Login as Admin to upload BMI data.</div>', unsafe_allow_html=True)
+        else:
             st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown(f'<div class="ins ins-green">📤 <b>Step 2:</b> Upload the filled Excel file below.</div>', unsafe_allow_html=True)
-
-            uploaded = st.file_uploader("Upload filled BMI Excel", type=['xlsx','csv'], key="bmi_upload")
-
-            if uploaded:
+            st.markdown(f'<div class="ins ins-green">📤 Upload the filled BMI Excel below. Duplicates (same employee+month+year) will be updated.</div>', unsafe_allow_html=True)
+            bmi_file = st.file_uploader("Upload BMI Excel",type=["xlsx"],key="bmi_upload")
+            if bmi_file:
                 try:
-                    if uploaded.name.endswith('.csv'):
-                        df_up = pd.read_csv(uploaded)
+                    bmi_xl = pd.read_excel(bmi_file)
+                    required = ['Employee_ID','Employee_Name','Department','Month','Year','Weight_kg','Height_cm']
+                    if not all(c in bmi_xl.columns for c in required):
+                        st.error(f"Missing columns. Required: {required}")
                     else:
-                        df_up = pd.read_excel(uploaded)
-
-                    # Validate columns
-                    required = {'Employee_ID','Employee_Name','Month','Year','Weight_kg','Height_cm'}
-                    missing = required - set(df_up.columns)
-                    if missing:
-                        st.error(f"❌ Missing columns: {missing}. Please use the template.")
-                    else:
-                        df_up = df_up.dropna(subset=['Employee_ID','Weight_kg','Height_cm'])
-                        df_up['Weight_kg'] = pd.to_numeric(df_up['Weight_kg'], errors='coerce')
-                        df_up['Height_cm'] = pd.to_numeric(df_up['Height_cm'], errors='coerce')
-                        df_up = df_up.dropna(subset=['Weight_kg','Height_cm'])
-                        df_up['BMI_calc'] = (df_up['Weight_kg'] / (df_up['Height_cm']/100)**2).round(2)
-                        df_up['Category'] = df_up['BMI_calc'].apply(bmi_category)
-
-                        # Preview
-                        st.markdown(f'<div class="sh sh-green">Preview — {len(df_up)} records to upload</div>', unsafe_allow_html=True)
-                        preview = df_up[['Employee_ID','Employee_Name','Month','Year','Weight_kg','Height_cm','BMI_calc','Category']].copy()
-                        preview.columns = ['ID','Name','Month','Year','Weight(kg)','Height(cm)','BMI','Category']
-                        st.dataframe(preview, use_container_width=True, hide_index=True)
-
-                        if st.button("✅ CONFIRM UPLOAD TO DATABASE", use_container_width=True):
-                            conn = get_conn()
-                            ok = upd = err = 0
-                            today = date.today().isoformat()
-                            for _, row in df_up.iterrows():
-                                try:
-                                    eid = int(row['Employee_ID'])
-                                    nm  = str(row['Employee_Name'])
-                                    mon = str(row['Month'])
-                                    yr  = int(row['Year'])
-                                    wt  = float(row['Weight_kg'])
-                                    ht  = float(row['Height_cm'])
-                                    bv  = float(row['BMI_calc'])
-                                    cat = str(row['Category'])
-                                    # Get department
-                                    dep_row = conn.execute("SELECT Department FROM Employees WHERE EmployeeID=?", (eid,)).fetchone()
-                                    dep = dep_row[0] if dep_row else "Unknown"
-                                    # Check if record exists for same employee+month+year
-                                    exists = conn.execute("SELECT BID FROM BMI WHERE EmployeeID=? AND Month=? AND Year=?",
-                                                          (eid,mon,yr)).fetchone()
-                                    if exists:
-                                        conn.execute("UPDATE BMI SET Weight_kg=?,Height_cm=?,BMI=?,Category=?,RecordedOn=? WHERE BID=?",
-                                                     (wt,ht,bv,cat,today,exists[0]))
-                                        upd += 1
-                                    else:
-                                        conn.execute("INSERT INTO BMI (EmployeeID,EmployeeName,Department,Month,Year,Weight_kg,Height_cm,BMI,Category,RecordedOn) VALUES (?,?,?,?,?,?,?,?,?,?)",
-                                                     (eid,nm,dep,mon,yr,wt,ht,bv,cat,today))
-                                        ok += 1
-                                except Exception as ex:
-                                    err += 1
-                            conn.commit(); conn.close()
-                            st.success(f"✅ Upload complete! {ok} new records added, {upd} updated, {err} skipped.")
-                            if err > 0: st.warning(f"⚠️ {err} rows skipped — check Employee IDs exist in system.")
-                            st.rerun()
-                except Exception as e:
-                    st.error(f"❌ Error reading file: {e}")
-
-            # Current BMI data
-            bmi_cur = q("SELECT EmployeeName,Department,Month,Year,Weight_kg,Height_cm,ROUND(BMI,2) AS BMI,Category FROM BMI ORDER BY Year DESC,EmployeeName")
-            if len(bmi_cur):
-                st.markdown("---")
-                st.markdown(f'<div class="sh sh-green">Current BMI Records ({len(bmi_cur)} entries)</div>', unsafe_allow_html=True)
-                st.dataframe(bmi_cur, use_container_width=True, hide_index=True)
-                # Delete option
-                st.markdown("---")
-                if st.checkbox("🗑️ Delete a BMI record", key="bmi_del_cb"):
-                    bmi_all = q("SELECT BID,EmployeeName,Month,Year FROM BMI ORDER BY EmployeeName,Year,Month")
-                    bmi_del_opts = {f"#{r['BID']} — {r['EmployeeName']} · {r['Month']} {int(r['Year'])}": r['BID'] for _,r in bmi_all.iterrows()}
-                    bmi_del_sel = st.selectbox("Select record to delete:",list(bmi_del_opts.keys()),key="bmi_del_sel")
-                    bmi_del_id  = bmi_del_opts[bmi_del_sel]
-                    if st.button("🗑️ DELETE BMI RECORD",use_container_width=True):
-                        conn=get_conn(); conn.execute("DELETE FROM BMI WHERE BID=?",(bmi_del_id,))
-                        conn.commit(); conn.close(); st.success("✅ Deleted."); st.rerun()
+                        bmi_xl = bmi_xl.dropna(subset=['Employee_ID','Weight_kg','Height_cm'])
+                        bmi_xl['BMI'] = (bmi_xl['Weight_kg']/(bmi_xl['Height_cm']/100)**2).round(2)
+                        bmi_xl['Category'] = bmi_xl['BMI'].apply(bmi_category)
+                        conn=get_conn()
+                        inserted=0; updated=0
+                        for _,row in bmi_xl.iterrows():
+                            existing = conn.execute("SELECT BID FROM BMI WHERE EmployeeID=? AND Month=? AND Year=?",
+                                                    (int(row['Employee_ID']),str(row['Month']),int(row['Year']))).fetchone()
+                            if existing:
+                                conn.execute("UPDATE BMI SET Weight_kg=?,Height_cm=?,BMI=?,Category=?,RecordedOn=? WHERE BID=?",
+                                             (row['Weight_kg'],row['Height_cm'],row['BMI'],row['Category'],date.today().isoformat(),existing[0]))
+                                updated+=1
+                            else:
+                                conn.execute("INSERT INTO BMI (EmployeeID,EmployeeName,Department,Month,Year,Weight_kg,Height_cm,BMI,Category,RecordedOn) VALUES (?,?,?,?,?,?,?,?,?,?)",
+                                             (int(row['Employee_ID']),str(row['Employee_Name']),str(row['Department']),str(row['Month']),int(row['Year']),
+                                              row['Weight_kg'],row['Height_cm'],row['BMI'],row['Category'],date.today().isoformat()))
+                                inserted+=1
+                        conn.commit(); conn.close()
+                        st.success(f"✅ Done! {inserted} new records inserted, {updated} records updated."); st.rerun()
+                except Exception as e: st.error(f"Error: {e}")
+            st.markdown("<br>", unsafe_allow_html=True)
+            if st.checkbox("🗑️ Delete a BMI record",key="bmi_del_cb"):
+                bmi_all = q("SELECT BID,EmployeeName,Month,Year FROM BMI ORDER BY EmployeeName,Year,Month")
+                bmi_del_opts = {f"#{r['BID']} — {r['EmployeeName']} · {r['Month']} {int(r['Year'])}":r['BID'] for _,r in bmi_all.iterrows()}
+                bmi_del_sel = st.selectbox("Select record to delete:",list(bmi_del_opts.keys()),key="bmi_del_sel")
+                bmi_del_id  = bmi_del_opts[bmi_del_sel]
+                if st.button("🗑️ DELETE BMI RECORD",use_container_width=True):
+                    conn=get_conn(); conn.execute("DELETE FROM BMI WHERE BID=?",(bmi_del_id,))
+                    conn.commit(); conn.close(); st.success("✅ Deleted."); st.rerun()
