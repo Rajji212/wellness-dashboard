@@ -34,6 +34,20 @@ CBS = "#2C3E50"   # Body text
 CGY = "#7F8C8D"   # Gray
 CBR = "#E8DDD0"   # Border warm
 
+# Culture Pillar palette
+PILLARS = {
+    "Agility":    {"color":"#F1C40F","dark":"#9A7D0A","light":"#FFFDE7","grad":"135deg,#B7950B,#F1C40F,#F9E94E",
+                   "icon":'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>'},
+    "Care":       {"color":"#E67E22","dark":"#A04000","light":"#FFF3E0","grad":"135deg,#A04000,#E67E22,#F39C12",
+                   "icon":'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'},
+    "Courage":    {"color":"#8E44AD","dark":"#5B2C6F","light":"#F3E5F5","grad":"135deg,#5B2C6F,#8E44AD,#BB8FCE",
+                   "icon":'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'},
+    "Innovation": {"color":"#C0392B","dark":"#7B241C","light":"#FDEDEC","grad":"135deg,#7B241C,#C0392B,#E74C3C",
+                   "icon":'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><circle cx="12" cy="12" r="4"/></svg>'},
+    "Vibrancy":   {"color":"#27AE60","dark":"#1A5E3A","light":"#E8F8F5","grad":"135deg,#1A5E3A,#27AE60,#52BE80",
+                   "icon":'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>'},
+}
+
 # ── CSS ───────────────────────────────────────────────────────────────────────
 st.markdown(f"""
 <style>
@@ -111,6 +125,12 @@ html,body,[class*="css"]{{font-family:'DM Sans',sans-serif;color:{CBS};}}
 .hero-health{{background:linear-gradient(135deg,#0E5E3A 0%,#1A7A4A 55%,#27AE60 100%);box-shadow:0 8px 32px rgba(39,174,96,0.28);}}
 .hero-query{{background:linear-gradient(135deg,#4A235A 0%,#6C3483 55%,#8E44AD 100%);box-shadow:0 8px 32px rgba(142,68,173,0.28);}}
 .hero-admin{{background:linear-gradient(135deg,#212529 0%,#343A40 55%,#495057 100%);box-shadow:0 8px 32px rgba(0,0,0,0.25);}}
+.hero-agility{{background:linear-gradient(135deg,#B7950B 0%,#F1C40F 55%,#F9E94E 100%);box-shadow:0 8px 32px rgba(241,196,15,0.35);}}
+.hero-care{{background:linear-gradient(135deg,#A04000 0%,#E67E22 55%,#F39C12 100%);box-shadow:0 8px 32px rgba(230,126,34,0.35);}}
+.hero-courage{{background:linear-gradient(135deg,#5B2C6F 0%,#8E44AD 55%,#BB8FCE 100%);box-shadow:0 8px 32px rgba(142,68,173,0.35);}}
+.hero-innovation{{background:linear-gradient(135deg,#7B241C 0%,#C0392B 55%,#E74C3C 100%);box-shadow:0 8px 32px rgba(192,57,43,0.35);}}
+.hero-vibrancy{{background:linear-gradient(135deg,#1A5E3A 0%,#27AE60 55%,#52BE80 100%);box-shadow:0 8px 32px rgba(39,174,96,0.35);}}
+.ins-amber{{border-left-color:#F39C12;background:linear-gradient(135deg,#FFFBEC,{CW});}}
 .hero-title{{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:#fff;margin:0;line-height:1.1;position:relative;z-index:1;}}
 .hero-sub{{font-family:'Montserrat',sans-serif;font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.65);letter-spacing:3.5px;text-transform:uppercase;margin-top:7px;position:relative;z-index:1;}}
 
@@ -452,67 +472,46 @@ def get_conn():
 
 def init_db():
     conn = get_conn()
-    conn.executescript("""
-        CREATE TABLE IF NOT EXISTS Employees (
-            EmployeeID INTEGER PRIMARY KEY,
-            Name TEXT NOT NULL,
-            Department TEXT NOT NULL,
-            Designation TEXT DEFAULT '',
-            JoinDate TEXT DEFAULT ''
-        );
-        CREATE TABLE IF NOT EXISTS Events (
-            EventID INTEGER PRIMARY KEY AUTOINCREMENT,
-            EventName TEXT NOT NULL UNIQUE,
-            Type TEXT DEFAULT 'Indoor',
-            Difficulty TEXT DEFAULT 'Casual',
-            Multiplier REAL DEFAULT 1.0,
-            Description TEXT DEFAULT '',
-            PrizeWinner TEXT DEFAULT '',
-            PrizeRunnerUp TEXT DEFAULT '',
-            Prize2ndRunnerUp TEXT DEFAULT ''
-        );
-        CREATE TABLE IF NOT EXISTS Participation (
-            PID INTEGER PRIMARY KEY AUTOINCREMENT,
-            EmployeeID INTEGER, EmployeeName TEXT, EventName TEXT, Date TEXT,
-            Position TEXT, Registered TEXT DEFAULT 'Yes', Participated TEXT DEFAULT 'Yes',
-            ParticipationPoints REAL DEFAULT 10,
-            BasePoints REAL DEFAULT 0,
-            Multiplier REAL DEFAULT 1.0,
-            GamePoints REAL DEFAULT 0,
-            FinalPoints REAL DEFAULT 0
-        );
-        CREATE TABLE IF NOT EXISTS Scores (
-            ScoreID INTEGER PRIMARY KEY AUTOINCREMENT,
-            EmployeeID INTEGER UNIQUE,
-            EmployeeName TEXT, Department TEXT,
-            Score REAL DEFAULT 0,
-            LastUpdated TEXT
-        );
-        CREATE TABLE IF NOT EXISTS Schedule (
-            SID INTEGER PRIMARY KEY AUTOINCREMENT,
-            EventName TEXT, StartTime TEXT,
-            Status TEXT DEFAULT 'Upcoming',
-            Venue TEXT DEFAULT '', Notes TEXT DEFAULT ''
-        );
-        CREATE TABLE IF NOT EXISTS BMI (
-            BID INTEGER PRIMARY KEY AUTOINCREMENT,
-            EmployeeID INTEGER,
-            EmployeeName TEXT,
-            Department TEXT,
-            Month TEXT,
-            Year INTEGER,
-            Weight_kg REAL,
-            Height_cm REAL,
-            BMI REAL,
-            Category TEXT,
-            RecordedOn TEXT
-        );
-    """)
-    conn.commit()
-    # Migrate existing DB: add prize columns to Events if not present
-    for col in ["PrizeWinner TEXT DEFAULT ''", "PrizeRunnerUp TEXT DEFAULT ''", "Prize2ndRunnerUp TEXT DEFAULT ''"]:
-        try: conn.execute(f"ALTER TABLE Events ADD COLUMN {col}")
-        except: pass
+    cur = conn.cursor()
+    cur.execute("""CREATE TABLE IF NOT EXISTS Employees (
+        EmployeeID INTEGER PRIMARY KEY, Name TEXT NOT NULL,
+        Department TEXT NOT NULL, Designation TEXT DEFAULT '',
+        JoinDate TEXT DEFAULT '', House TEXT DEFAULT '')""")
+    cur.execute("""CREATE TABLE IF NOT EXISTS Events (
+        EventID INTEGER PRIMARY KEY AUTOINCREMENT, EventName TEXT NOT NULL UNIQUE,
+        Type TEXT DEFAULT 'Indoor', Difficulty TEXT DEFAULT 'Casual',
+        Multiplier REAL DEFAULT 1.0, Description TEXT DEFAULT '',
+        PrizeWinner TEXT DEFAULT '', PrizeRunnerUp TEXT DEFAULT '',
+        Prize2ndRunnerUp TEXT DEFAULT '', Pillar TEXT DEFAULT '')""")
+    cur.execute("""CREATE TABLE IF NOT EXISTS Participation (
+        PID INTEGER PRIMARY KEY AUTOINCREMENT,
+        EmployeeID INTEGER, EmployeeName TEXT, EventName TEXT, Date TEXT,
+        Position TEXT, Registered TEXT DEFAULT 'Yes', Participated TEXT DEFAULT 'Yes',
+        ParticipationPoints REAL DEFAULT 10, BasePoints REAL DEFAULT 0,
+        Multiplier REAL DEFAULT 1.0, GamePoints REAL DEFAULT 0, FinalPoints REAL DEFAULT 0)""")
+    cur.execute("""CREATE TABLE IF NOT EXISTS Scores (
+        ScoreID INTEGER PRIMARY KEY AUTOINCREMENT, EmployeeID INTEGER UNIQUE,
+        EmployeeName TEXT, Department TEXT, Score REAL DEFAULT 0, LastUpdated TEXT DEFAULT '')""")
+    cur.execute("""CREATE TABLE IF NOT EXISTS Schedule (
+        SID INTEGER PRIMARY KEY AUTOINCREMENT, EventName TEXT,
+        StartTime TEXT, Status TEXT DEFAULT 'Upcoming',
+        Venue TEXT DEFAULT '', Notes TEXT DEFAULT '')""")
+    cur.execute("""CREATE TABLE IF NOT EXISTS BMI (
+        BID INTEGER PRIMARY KEY AUTOINCREMENT, EmployeeID INTEGER,
+        EmployeeName TEXT, Department TEXT, Month TEXT, Year INTEGER,
+        Weight_kg REAL, Height_cm REAL, BMI REAL, Category TEXT,
+        RecordedOn TEXT DEFAULT '')""")
+    # Safe migrations — check actual columns before ALTER
+    existing_emp = [r[1] for r in cur.execute("PRAGMA table_info(Employees)").fetchall()]
+    if 'House' not in existing_emp:
+        cur.execute("ALTER TABLE Employees ADD COLUMN House TEXT DEFAULT ''")
+    existing_ev = [r[1] for r in cur.execute("PRAGMA table_info(Events)").fetchall()]
+    for col_def, col_name in [("Pillar TEXT DEFAULT ''","Pillar"),
+                               ("PrizeWinner TEXT DEFAULT ''","PrizeWinner"),
+                               ("PrizeRunnerUp TEXT DEFAULT ''","PrizeRunnerUp"),
+                               ("Prize2ndRunnerUp TEXT DEFAULT ''","Prize2ndRunnerUp")]:
+        if col_name not in existing_ev:
+            cur.execute(f"ALTER TABLE Events ADD COLUMN {col_def}")
     conn.commit()
     conn.close()
 
@@ -524,13 +523,21 @@ def seed_initial_data(path="Employee_Wellness_Scoring_System.xlsx"):
         xl = pd.read_excel(path, sheet_name=None)
         conn = get_conn()
         # Employees
-        emp = xl['Employee_Master'][['Employee_ID','Employee_Name','Department']].dropna(subset=['Employee_ID'])
-        emp.columns = ['EmployeeID','Name','Department']
-        emp['EmployeeID'] = emp['EmployeeID'].astype(int)
-        emp['Designation'] = ''; emp['JoinDate'] = ''
-        for _, r in emp.iterrows():
-            conn.execute("INSERT OR IGNORE INTO Employees (EmployeeID,Name,Department,Designation,JoinDate) VALUES (?,?,?,?,?)",
-                         (r['EmployeeID'],r['Name'],r['Department'],'',''))
+        emp_sheet = xl['Employee_Master'].dropna(subset=['Employee_ID'])
+        # Read House column if present, else default to empty
+        has_house = 'House' in emp_sheet.columns
+        emp_sheet = emp_sheet.copy()
+        emp_sheet['EmployeeID'] = emp_sheet['Employee_ID'].astype(int)
+        emp_sheet['Name'] = emp_sheet['Employee_Name']
+        emp_sheet['House'] = emp_sheet['House'].fillna('') if has_house else ''
+        for _, r in emp_sheet.iterrows():
+            house_val = str(r['House']).strip() if has_house and str(r['House']) not in ['nan','None',''] else ''
+            conn.execute("INSERT OR IGNORE INTO Employees (EmployeeID,Name,Department,Designation,JoinDate,House) VALUES (?,?,?,?,?,?)",
+                         (int(r['EmployeeID']),str(r['Name']),str(r.get('Department','')),str(r.get('Designation','')),'' ,house_val))
+            # Also UPDATE house for already-existing employees
+            if house_val:
+                conn.execute("UPDATE Employees SET House=? WHERE EmployeeID=? AND (House='' OR House IS NULL)",
+                             (house_val, int(r['EmployeeID'])))
         # Events
         ev = xl['Event_Master'].dropna(subset=['Event_ID'])
         for _, r in ev.iterrows():
@@ -548,7 +555,8 @@ def seed_initial_data(path="Employee_Wellness_Scoring_System.xlsx"):
                 (EmployeeID,EmployeeName,EventName,Date,Position,Registered,Participated,
                  ParticipationPoints,BasePoints,Multiplier,GamePoints,FinalPoints)
                 VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
-                (r['EmployeeID'],r['EmployeeName'],r['EventName'],str(r['Date']),
+                (r['EmployeeID'],r['EmployeeName'],r['EventName'],
+                 (lambda d: (__import__('datetime').date(1899,12,30)+__import__('datetime').timedelta(days=int(float(str(d))))).isoformat() if str(d).replace('.','').isdigit() else str(d)[:10])(r['Date']),
                  r['Position'],r['Registered'],r['Participated'],
                  r['ParticipationPoints'],r['BasePoints'],r['Multiplier'],
                  r['GamePoints'],r['FinalPoints']))
@@ -597,8 +605,33 @@ def q(sql, params=()):
 
 def get_leaderboard():
     return q("""SELECT s.EmployeeID, s.EmployeeName AS Name, s.Department,
-                       COALESCE(s.Score,0) AS TotalPoints
-                FROM Scores s ORDER BY TotalPoints DESC""")
+                       COALESCE(e.House,'') AS House, COALESCE(s.Score,0) AS TotalPoints
+                FROM Scores s LEFT JOIN Employees e ON s.EmployeeID=e.EmployeeID
+                ORDER BY TotalPoints DESC""")
+
+def get_house_stats():
+    return q("""SELECT e.House, COALESCE(SUM(s.Score),0) AS TotalPoints,
+                       COUNT(DISTINCT e.EmployeeID) AS Members
+                FROM Employees e LEFT JOIN Scores s ON e.EmployeeID=s.EmployeeID
+                WHERE e.House != '' AND e.House IS NOT NULL
+                GROUP BY e.House ORDER BY TotalPoints DESC""")
+
+def get_house_participation():
+    part_total = q("SELECT COUNT(*) as cnt FROM Participation").iloc[0]['cnt']
+    if part_total > 0:
+        return q("""SELECT e.House,
+                           COUNT(DISTINCT p.EmployeeID) AS Participated,
+                           COUNT(DISTINCT e.EmployeeID) AS Total
+                    FROM Employees e LEFT JOIN Participation p ON e.EmployeeID=p.EmployeeID
+                    WHERE e.House != '' AND e.House IS NOT NULL
+                    GROUP BY e.House""")
+    else:
+        return q("""SELECT e.House,
+                           COUNT(DISTINCT CASE WHEN s.Score > 0 THEN s.EmployeeID END) AS Participated,
+                           COUNT(DISTINCT e.EmployeeID) AS Total
+                    FROM Employees e LEFT JOIN Scores s ON e.EmployeeID=s.EmployeeID
+                    WHERE e.House != '' AND e.House IS NOT NULL
+                    GROUP BY e.House""")
 
 def get_dept_stats():
     emp = q("SELECT Department,COUNT(*) as Total FROM Employees GROUP BY Department")
@@ -613,11 +646,12 @@ def get_dept_stats():
     return m.sort_values('Total', ascending=False)
 
 def get_game_winners():
-    return q("""SELECT EventName,Position,EmployeeName,EmployeeID,FinalPoints,Date
-                FROM Participation
-                WHERE Position IN ('Winner','Runner-up','2nd Runner-up')
-                ORDER BY EventName,
-                  CASE Position WHEN 'Winner' THEN 1 WHEN 'Runner-up' THEN 2 ELSE 3 END""")
+    return q("""SELECT p.EventName, p.Position, p.EmployeeName, p.EmployeeID,
+                       p.FinalPoints, p.Date, COALESCE(e.House,'') AS House
+                FROM Participation p LEFT JOIN Employees e ON p.EmployeeID=e.EmployeeID
+                WHERE p.Position IN ('Winner','Runner-up','2nd Runner-up')
+                ORDER BY p.EventName,
+                  CASE p.Position WHEN 'Winner' THEN 1 WHEN 'Runner-up' THEN 2 ELSE 3 END""")
 
 def get_summary():
     conn = get_conn()
@@ -636,9 +670,17 @@ def get_summary():
 init_db()
 conn_chk = get_conn()
 emp_count = conn_chk.execute("SELECT COUNT(*) FROM Employees").fetchone()[0]
+score_count = conn_chk.execute("SELECT COUNT(*) FROM Scores").fetchone()[0]
+# Auto-backfill: if Employees empty but Scores has data, populate Employees from Scores
+if emp_count == 0 and score_count > 0:
+    rows = conn_chk.execute("SELECT EmployeeID, EmployeeName, Department FROM Scores").fetchall()
+    for eid, ename, edept in rows:
+        conn_chk.execute("INSERT OR IGNORE INTO Employees (EmployeeID,Name,Department,Designation,JoinDate,House) VALUES (?,?,?,?,?,?)",
+                         (eid, ename or '', edept or '', '', '', ''))
+    conn_chk.commit()
+    emp_count = conn_chk.execute("SELECT COUNT(*) FROM Employees").fetchone()[0]
 conn_chk.close()
 if emp_count == 0:
-    # Try common paths where Excel might be placed
     import pathlib
     possible_paths = [
         "Employee_Wellness_Scoring_System.xlsx",
@@ -655,7 +697,7 @@ for k,v in [('admin_auth',False),('gemini_key',''),('nlq',''),('last_refresh',da
 # Smart auto-refresh JS (pauses on Admin page & when user is typing)
 st.markdown("""<script>
 (function(){
-    var T=60000,timer=null;
+    var T=6000000,timer=null;
     function isAdmin(){
         var r=document.querySelectorAll('[data-testid="stSidebar"] [role="radio"]');
         for(var i=0;i<r.length;i++){if(r[i].getAttribute('aria-checked')==='true'&&r[i].innerText.includes('Admin'))return true;}
@@ -705,6 +747,7 @@ with st.sidebar:
             "🏆  Dashboard",
             "📅  Schedule",
             "🏥  Health & Wellbeing",
+            "🎯  Culture Pillars",
             "💬  Smart Query",
             "🔒  Admin Portal",
         ],
@@ -714,11 +757,13 @@ with st.sidebar:
     )
 
     s = get_summary()
+    hs_sb = get_house_stats()
+    top_house_sb = hs_sb.iloc[0]['House'] if len(hs_sb) else "—"
     qs_items = [
         ("qs-c1","👥","Employees",    str(s['emp'])),
         ("qs-c2","🏃","Participants",  str(s['part'])),
         ("qs-c3","📈","Part. Rate",    f"{s['pct']}%"),
-        ("qs-c4","⚽","Events Held",   str(s['events'])),
+        ("qs-c4","🏠","Top House",     str(top_house_sb)),
         ("qs-c5","🏆","Top Score",     str(int(s['top']))),
     ]
     qs_html = '''<div style="margin-top:14px;">
@@ -744,7 +789,7 @@ with st.sidebar:
     lr = st.session_state.last_refresh.strftime("%d %b, %H:%M:%S")
     st.markdown(f'<div style="text-align:center;font-size:0.6rem;color:rgba(255,255,255,0.45);margin-top:6px;">Last refreshed: {lr}</div>', unsafe_allow_html=True)
     if not is_admin:
-        st.markdown('<div style="text-align:center;font-size:0.58rem;color:rgba(255,255,255,0.35);margin-top:2px;">⟳ Auto every 60s</div>', unsafe_allow_html=True)
+        st.markdown('<div style="text-align:center;font-size:0.58rem;color:rgba(255,255,255,0.35);margin-top:2px;">⟳ Auto every 60m</div>', unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  PAGE 1 — DASHBOARD
@@ -762,11 +807,16 @@ if "Dashboard" in page:
     lb  = get_leaderboard()
     ds  = get_dept_stats()
     gw  = get_game_winners()
+    hs  = get_house_stats()
+    hp  = get_house_participation()
     ps  = q("SELECT EventName,COUNT(*) as Entries,AVG(FinalPoints) as AvgPts FROM Participation GROUP BY EventName ORDER BY Entries DESC")
+    house_colors = {p: PILLARS[p]["color"] for p in PILLARS}
 
     # KPI row
     k1,k2,k3,k4 = st.columns(4)
     top_dept = ds.sort_values('Pct',ascending=False).iloc[0]['Department'] if len(ds) else "—"
+    th_name = hs.iloc[0]['House'] if len(hs) else "—"
+    th_pts  = int(hs.iloc[0]['TotalPoints']) if len(hs) else 0
     for col,(val,lbl,sub,c) in zip([k1,k2,k3,k4],[
         (s['emp'],   "Total Employees",   "",              CR),
         (s['part'],  "Participants",       f"{s['pct']}% rate", CG),
@@ -780,8 +830,8 @@ if "Dashboard" in page:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Podium + Top 3 Depts
-    cp, cd = st.columns([1.2,1], gap="large")
+    # Individual Podium + House Podium
+    cp, chp = st.columns([1.2,1], gap="large")
     with cp:
         st.markdown('<div class="sh">🏅 Champions Podium</div>', unsafe_allow_html=True)
         top3 = lb.head(3).reset_index(drop=True)
@@ -791,20 +841,88 @@ if "Dashboard" in page:
             if si < len(top3):
                 r = top3.iloc[si]
                 nm = "<br>".join(str(r['Name']).split()[:2])
+                house_tag = f'<div style="font-size:0.6rem;color:{CGY};margin-top:1px;">🏠 {r["House"]}</div>' if str(r.get("House","")) not in ["","—"] else ""
                 html += (f'<div class="pod {cls}"><div class="pod-av">{em}</div>'
                          f'<div class="pod-nm">{nm}</div><div class="pod-dp">{r["Department"]}</div>'
-                         f'<div class="pod-sc">{int(r["TotalPoints"])} pts</div>'
+                         f'{house_tag}<div class="pod-sc">{int(r["TotalPoints"])} pts</div>'
                          f'<div class="pod-st">{num}</div></div>')
         html += '</div></div>'
         st.markdown(html, unsafe_allow_html=True)
 
-    with cd:
-        st.markdown('<div class="sh">🏢 Top 3 Departments · Participation</div>', unsafe_allow_html=True)
-        top3d = ds.sort_values('Pct',ascending=False).head(3).reset_index(drop=True)
-        rc = [CG,"#A0A0A0","#CD7F32"]; re = ["🥇","🥈","🥉"]
-        for i, (_, row) in enumerate(top3d.iterrows()):
-            c = rc[i] if i<3 else CR; e = re[i] if i<3 else "▸"
-            bg = ["#FFFBEC","#F8F8F8","#FFF5EE"][i] if i<3 else "#FFF"
+    with chp:
+        st.markdown('<div class="sh">🏠 House Podium</div>', unsafe_allow_html=True)
+        top3h = hs.head(3).reset_index(drop=True)
+        hhtml = '<div class="card"><div class="podium">'
+        for si,cls,em,num in [(1,"pod2","🥈","2"),(0,"pod1","🥇","1"),(2,"pod3","🥉","3")]:
+            if si < len(top3h):
+                r = top3h.iloc[si]
+                hname = str(r['House'])
+                hc = house_colors.get(hname, CR)
+                hhtml += (f'<div class="pod {cls}">'
+                          f'<div class="pod-av" style="background:{hc}22;border:3px solid {hc};">'
+                          f'<span style="color:{hc};font-size:1.4rem;">{em}</span></div>'
+                          f'<div class="pod-nm">{hname}</div>'
+                          f'<div class="pod-dp">{int(r["Members"])} members</div>'
+                          f'<div class="pod-sc" style="color:{hc};">{int(r["TotalPoints"])} pts</div>'
+                          f'<div class="pod-st">{num}</div></div>')
+        if len(top3h) == 0:
+            hhtml += f'<div style="text-align:center;padding:20px;color:{CGY};font-size:0.85rem;">No houses assigned yet.<br>Set houses via Admin → Employees.</div>'
+        hhtml += '</div></div>'
+        st.markdown(hhtml, unsafe_allow_html=True)
+
+    # House Points Bar + House Participation
+    hb1, hb2 = st.columns(2, gap="large")
+    with hb1:
+        st.markdown('<div class="sh">🏠 House Points Breakdown</div>', unsafe_allow_html=True)
+        if len(hs):
+            max_pts = max(int(hs['TotalPoints'].max()), 1)
+            bar_html = '<div class="card" style="padding:18px 20px;">'
+            for _, row in hs.iterrows():
+                hname = str(row['House']); hc = house_colors.get(hname, CR)
+                pct = round(int(row['TotalPoints'])/max_pts*100)
+                bar_html += (f'<div style="margin-bottom:12px;">'
+                             f'<div style="display:flex;justify-content:space-between;margin-bottom:4px;">'
+                             f'<span style="font-family:Montserrat,sans-serif;font-size:0.72rem;font-weight:700;color:{CBS};">{hname}</span>'
+                             f'<span style="font-family:Playfair Display,serif;font-size:0.9rem;font-weight:700;color:{hc};">{int(row["TotalPoints"])} pts</span></div>'
+                             f'<div style="background:#EEE;border-radius:4px;height:10px;overflow:hidden;">'
+                             f'<div style="width:{pct}%;height:100%;background:{hc};border-radius:4px;"></div></div>'
+                             f'<div style="font-size:0.62rem;color:{CGY};margin-top:2px;">{int(row["Members"])} members</div></div>')
+            bar_html += '</div>'
+            st.markdown(bar_html, unsafe_allow_html=True)
+        else:
+            st.markdown(f'<div class="ins">No houses assigned yet. Assign via Admin → Employees.</div>', unsafe_allow_html=True)
+
+    with hb2:
+        st.markdown('<div class="sh">📊 House Participation Rate</div>', unsafe_allow_html=True)
+        if len(hp):
+            hp2 = hp.copy()
+            hp2['Pct'] = (pd.to_numeric(hp2['Participated'],errors='coerce').fillna(0) /
+                          pd.to_numeric(hp2['Total'],errors='coerce').replace(0,1) * 100).round(1)
+            bar_html2 = '<div class="card" style="padding:18px 20px;">'
+            for _, row in hp2.sort_values('Pct',ascending=False).iterrows():
+                hname = str(row['House']); hc = house_colors.get(hname, CR)
+                pct_val = float(row['Pct'])
+                bar_html2 += (f'<div style="margin-bottom:12px;">'
+                              f'<div style="display:flex;justify-content:space-between;margin-bottom:4px;">'
+                              f'<span style="font-family:Montserrat,sans-serif;font-size:0.72rem;font-weight:700;color:{CBS};">{hname}</span>'
+                              f'<span style="font-family:Playfair Display,serif;font-size:0.9rem;font-weight:700;color:{hc};">{pct_val}%</span></div>'
+                              f'<div style="background:#EEE;border-radius:4px;height:10px;overflow:hidden;">'
+                              f'<div style="width:{min(pct_val,100)}%;height:100%;background:{hc};border-radius:4px;"></div></div>'
+                              f'<div style="font-size:0.62rem;color:{CGY};margin-top:2px;">{int(row["Participated"])} of {int(row["Total"])} members</div></div>')
+            bar_html2 += '</div>'
+            st.markdown(bar_html2, unsafe_allow_html=True)
+        else:
+            st.markdown(f'<div class="ins">No houses assigned yet.</div>', unsafe_allow_html=True)
+
+    # Top 3 Depts
+    st.markdown('<div class="sh">🏢 Top 3 Departments · Participation</div>', unsafe_allow_html=True)
+    top3d = ds.sort_values('Pct',ascending=False).head(3).reset_index(drop=True)
+    rc = [CG,"#A0A0A0","#CD7F32"]; re = ["🥇","🥈","🥉"]
+    td1, td2, td3 = st.columns(3)
+    for col_td, (i, (_, row)) in zip([td1,td2,td3], enumerate(top3d.iterrows())):
+        c = rc[i] if i<3 else CR; e = re[i] if i<3 else "▸"
+        bg = ["#FFFBEC","#F8F8F8","#FFF5EE"][i] if i<3 else "#FFF"
+        with col_td:
             st.markdown(
                 f'<div style="background:{bg};border:1.5px solid {c}44;border-left:4px solid {c};'
                 f'border-radius:10px;padding:12px 16px;margin-bottom:8px;">'
@@ -890,11 +1008,13 @@ if "Dashboard" in page:
                           f'padding-bottom:7px;border-bottom:2px solid {CBR};">⚽ {evn}</div>')
                     for _, w in ev_df.iterrows():
                         em,cl,bg,bd = pos_cfg.get(w['Position'],('▸',CGY,'#F8F8F8','#EEE'))
+                        house_lbl = str(w.get('House',''))
+                        house_str = f' · 🏠 {house_lbl}' if house_lbl and house_lbl not in ['','—'] else ''
                         ch += (f'<div style="display:flex;align-items:center;gap:9px;margin-bottom:7px;'
                                f'background:{bg};border:1.5px solid {bd};border-radius:8px;padding:8px 11px;">'
                                f'<span style="font-size:1.2rem;">{em}</span>'
                                f'<div style="flex:1;"><div style="font-size:0.82rem;font-weight:700;color:{CBS};line-height:1.2;">{w["EmployeeName"]}</div>'
-                               f'<div style="font-size:0.62rem;color:{CGY};letter-spacing:1px;text-transform:uppercase;">{w["Position"]}</div></div>'
+                               f'<div style="font-size:0.62rem;color:{CGY};letter-spacing:1px;text-transform:uppercase;">{w["Position"]}{house_str}</div></div>'
                                f'<div style="font-family:Playfair Display,serif;font-size:0.9rem;font-weight:700;color:{cl};">{int(w["FinalPoints"])}pts</div>'
                                f'</div>')
                     ch += '</div>'
@@ -1033,6 +1153,10 @@ elif "Health" in page:
     tab_overview, tab_bmi = st.tabs(["🏥 Department Overview", "📊 BMI Tracker"])
 
     with tab_bmi:
+        is_admin_bmi = st.session_state.admin_auth
+        month_order = ["January","February","March","April","May","June",
+                       "July","August","September","October","November","December"]
+
         if len(bmi_df) == 0:
             st.markdown(f"""
             <div class="card card-green" style="text-align:center;padding:36px;">
@@ -1044,7 +1168,112 @@ elif "Health" in page:
                 </div>
             </div>""", unsafe_allow_html=True)
         else:
-            # Employee selector
+            bmi_df2 = bmi_df.copy()
+            bmi_df2['MonthNum'] = bmi_df2['Month'].apply(lambda m: month_order.index(m)+1 if m in month_order else 0)
+            latest_bmi_all = bmi_df2.sort_values(['Year','MonthNum']).groupby('EmployeeID').last().reset_index()
+
+            # KPI row
+            avg_bmi_val = round(latest_bmi_all['BMI'].mean(),1)
+            normal_pct  = round(len(latest_bmi_all[latest_bmi_all['Category']=='Normal'])/len(latest_bmi_all)*100,1)
+            hk1,hk2,hk3,hk4 = st.columns(4)
+            for col,(val,lbl,c) in zip([hk1,hk2,hk3,hk4],[
+                (avg_bmi_val,"Company Avg BMI",CGR),(f"{normal_pct}%","In Healthy Range","#1F618D"),
+                (len(latest_bmi_all),"Records on File",CG),(len(bmi_df),"Total Monthly Records",CO)]):
+                with col: st.markdown(f'<div class="kpi"><div class="kpi-v" style="color:{c};font-size:1.8rem;">{val}</div><div class="kpi-l">{lbl}</div></div>', unsafe_allow_html=True)
+            st.markdown("<br>", unsafe_allow_html=True)
+
+            # Dynamic better-than banner
+            emps_bmi_list = sorted(bmi_df['EmployeeName'].unique().tolist())
+            sel_banner = st.selectbox("🔍 Select your name to see your BMI ranking:", emps_bmi_list, key="bmi_banner")
+            my_rec = latest_bmi_all[latest_bmi_all['EmployeeName']==sel_banner]
+            if len(my_rec):
+                my_bmi = round(my_rec.iloc[0]['BMI'],1)
+                my_cat = my_rec.iloc[0]['Category']
+                better_pct = round(len(latest_bmi_all[latest_bmi_all['BMI']>my_bmi])/len(latest_bmi_all)*100)
+                bc = bmi_color(my_cat)
+                st.markdown(f'<div style="background:{bc}18;border:1.5px solid {bc}44;border-left:5px solid {bc};border-radius:12px;padding:14px 18px;margin-bottom:16px;">'
+                            f'<div style="font-size:0.95rem;font-weight:700;color:{bc};">⭐ Your BMI of <b>{my_bmi}</b> ({my_cat}) is better than <b>{100-better_pct}%</b> of Birla Opus employees</div>'
+                            f'<div style="font-size:0.78rem;color:{CBS};margin-top:3px;">India avg BMI: 22.9 · Healthy range: 18.5–24.9</div></div>', unsafe_allow_html=True)
+
+            # Fact cards
+            st.markdown(f'<div class="sh sh-green">📊 BMI Benchmarks & Facts</div>', unsafe_allow_html=True)
+            fc1,fc2,fc3 = st.columns(3)
+            for col,(val,lbl,desc,c) in zip([fc1,fc2,fc3],[
+                ("22.9","Average Indian Adult BMI","WHO South-East Asia ref. Indian healthy range (18.5–22.9) is slightly lower than global standard.","#1F618D"),
+                ("18.5–24.9","Healthy BMI Range","Below 18.5 = Underweight · 25–29.9 = Overweight · 30+ = Obese. Higher BMI raises lifestyle disease risk.",CGR),
+                ("1 in 5","Indians Overweight","Even a 5–10% reduction in body weight can significantly improve metabolic health.",CO),
+            ]):
+                with col: st.markdown(f'<div class="card-flat"><div style="font-family:Montserrat,sans-serif;font-size:0.6rem;font-weight:800;color:{CGY};letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">{lbl}</div>'
+                                      f'<div style="font-family:Playfair Display,serif;font-size:1.6rem;font-weight:700;color:{c};">{val}</div>'
+                                      f'<div style="font-size:0.75rem;color:{CGY};margin-top:4px;line-height:1.5;">{desc}</div></div>', unsafe_allow_html=True)
+            st.markdown("<br>", unsafe_allow_html=True)
+
+            # 3 charts: house BMI, dept BMI, category donut
+            ch1,ch2,ch3 = st.columns(3)
+            with ch1:
+                st.markdown(f'<div class="sh sh-green">🏠 House Avg BMI</div>', unsafe_allow_html=True)
+                house_bmi_df = q("""SELECT e.House, ROUND(AVG(b.BMI),2) AS AvgBMI
+                                     FROM BMI b JOIN Employees e ON b.EmployeeID=e.EmployeeID
+                                     WHERE e.House!='' AND e.House IS NOT NULL GROUP BY e.House""")
+                if len(house_bmi_df):
+                    hc_map = {p: PILLARS[p]["color"] for p in PILLARS}
+                    fig_hb = go.Figure(go.Bar(x=house_bmi_df['House'],y=house_bmi_df['AvgBMI'],
+                        marker=dict(color=[hc_map.get(h,CR) for h in house_bmi_df['House']],line=dict(width=0)),
+                        text=house_bmi_df['AvgBMI'],textposition='outside',textfont=dict(size=10,family='DM Sans')))
+                    fig_hb.add_hline(y=22.9,line_dash="dot",line_color=CR,line_width=1.5,
+                                     annotation_text="India avg",annotation_position="right",annotation_font=dict(color=CR,size=9))
+                    fig_hb.update_layout(paper_bgcolor='rgba(0,0,0,0)',plot_bgcolor='rgba(0,0,0,0)',
+                        xaxis=dict(tickfont=dict(color=CGY,size=9),gridcolor='rgba(0,0,0,0.04)'),
+                        yaxis=dict(tickfont=dict(color=CGY,size=9),gridcolor='rgba(0,0,0,0.05)',range=[0,35]),
+                        showlegend=False,margin=dict(l=10,r=60,t=10,b=10),height=240)
+                    st.plotly_chart(fig_hb,use_container_width=True,config={'displayModeBar':False})
+                else:
+                    st.markdown(f'<div class="ins ins-green" style="font-size:0.8rem;">Assign houses to employees first.</div>', unsafe_allow_html=True)
+            with ch2:
+                st.markdown(f'<div class="sh sh-green">🏢 Dept Avg BMI</div>', unsafe_allow_html=True)
+                dept_bmi_df = q("""SELECT e.Department, ROUND(AVG(b.BMI),2) AS AvgBMI
+                                    FROM BMI b JOIN Employees e ON b.EmployeeID=e.EmployeeID
+                                    GROUP BY e.Department ORDER BY AvgBMI DESC""")
+                if len(dept_bmi_df):
+                    fig_db = go.Figure(go.Bar(x=dept_bmi_df['Department'],y=dept_bmi_df['AvgBMI'],
+                        marker=dict(color=[bmi_color(bmi_category(v)) for v in dept_bmi_df['AvgBMI']],line=dict(width=0)),
+                        text=dept_bmi_df['AvgBMI'],textposition='outside',textfont=dict(size=10,family='DM Sans')))
+                    fig_db.add_hline(y=22.9,line_dash="dot",line_color=CR,line_width=1.5,
+                                     annotation_text="India avg",annotation_position="right",annotation_font=dict(color=CR,size=9))
+                    fig_db.update_layout(paper_bgcolor='rgba(0,0,0,0)',plot_bgcolor='rgba(0,0,0,0)',
+                        xaxis=dict(tickfont=dict(color=CGY,size=9),tickangle=-30,gridcolor='rgba(0,0,0,0.04)'),
+                        yaxis=dict(tickfont=dict(color=CGY,size=9),gridcolor='rgba(0,0,0,0.05)',range=[0,35]),
+                        showlegend=False,margin=dict(l=10,r=60,t=10,b=60),height=240)
+                    st.plotly_chart(fig_db,use_container_width=True,config={'displayModeBar':False})
+            with ch3:
+                st.markdown(f'<div class="sh sh-green">🥧 Category Split</div>', unsafe_allow_html=True)
+                cat_counts = latest_bmi_all['Category'].value_counts().reset_index()
+                cat_counts.columns = ['Category','Count']
+                cat_colors_map = {'Normal':CGR,'Underweight':'#2980B9','Overweight':'#F39C12','Obese':CR}
+                fig_don = go.Figure(go.Pie(labels=cat_counts['Category'],values=cat_counts['Count'],hole=0.62,
+                    marker=dict(colors=[cat_colors_map.get(c,'#999') for c in cat_counts['Category']],line=dict(color=CW,width=2)),
+                    textfont=dict(color=CBS,size=10,family='DM Sans'),textinfo='percent+label'))
+                fig_don.add_annotation(text=f"<b>{len(latest_bmi_all)}</b><br>Employees",x=0.5,y=0.5,xref='paper',yref='paper',
+                    showarrow=False,font=dict(color=CBS,size=12,family='DM Sans'))
+                fig_don.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                    legend=dict(font=dict(color=CGY,size=9),bgcolor='rgba(0,0,0,0)'),
+                    margin=dict(l=10,r=10,t=10,b=10),height=240)
+                st.plotly_chart(fig_don,use_container_width=True,config={'displayModeBar':False})
+
+            # BMI Table — admin sees all cols, employee sees only BMI+Category
+            st.markdown(f'<div class="sh sh-green" style="margin-top:8px;">📋 BMI Records</div>', unsafe_allow_html=True)
+            if not is_admin_bmi:
+                st.markdown(f'<div class="ins ins-green" style="font-size:0.8rem;">🔒 Weight and height are visible to admin only. Showing BMI & Category.</div>', unsafe_allow_html=True)
+                bmi_show = q("SELECT EmployeeName,Department,Month,Year,ROUND(BMI,2) AS BMI,Category FROM BMI ORDER BY Year DESC,Month,EmployeeName")
+            else:
+                st.markdown(f'<div class="ins" style="border-left-color:#F39C12;background:linear-gradient(135deg,#FFFBEC,#FFF);font-size:0.8rem;">👁️ Admin view — full data including weight and height visible.</div>', unsafe_allow_html=True)
+                bmi_show = q("SELECT EmployeeName,Department,Month,Year,Weight_kg,Height_cm,ROUND(BMI,2) AS BMI,Category FROM BMI ORDER BY Year DESC,Month,EmployeeName")
+            if len(bmi_show):
+                st.dataframe(bmi_show,use_container_width=True,hide_index=True)
+                st.markdown(f'<div class="ins" style="font-size:0.78rem;">{len(bmi_show)} BMI records on file</div>', unsafe_allow_html=True)
+
+            # Individual trend chart
+            st.markdown(f'<div class="sh sh-green" style="margin-top:18px;">📈 Individual BMI Trend</div>', unsafe_allow_html=True)
             emp_names = sorted(bmi_df['EmployeeName'].unique().tolist())
             col_sel, col_yr = st.columns([2,1])
             with col_sel:
@@ -1054,12 +1283,7 @@ elif "Health" in page:
                 sel_yr = st.selectbox("Year:", yrs, key="bmi_yr")
 
             emp_bmi = bmi_df[(bmi_df['EmployeeName']==sel_emp) & (bmi_df['Year']==sel_yr)].copy()
-
-            # Month order
-            month_order = ["January","February","March","April","May","June",
-                           "July","August","September","October","November","December"]
-            emp_bmi['MonthNum'] = emp_bmi['Month'].apply(
-                lambda m: month_order.index(m)+1 if m in month_order else 0)
+            emp_bmi['MonthNum'] = emp_bmi['Month'].apply(lambda m: month_order.index(m)+1 if m in month_order else 0)
             emp_bmi = emp_bmi.sort_values('MonthNum')
 
             if len(emp_bmi):
@@ -1073,8 +1297,8 @@ elif "Health" in page:
                 for col,(val,lbl,c) in zip([st1,st2,st3,st4],[
                     (f"{bmi_val}", "Current BMI",    cat_color),
                     (cat,          "Category",        cat_color),
-                    (f"{latest['Weight_kg']} kg", "Weight (latest)", CGR),
-                    (f"{latest['Height_cm']} cm", "Height",          "#1F618D"),
+                    (f"{latest['Weight_kg']} kg" if is_admin_bmi else "—", "Weight" if is_admin_bmi else "Weight (Admin)", CGR),
+                    (f"{latest['Height_cm']} cm" if is_admin_bmi else "—", "Height" if is_admin_bmi else "Height (Admin)", "#1F618D"),
                 ]):
                     with col:
                         st.markdown(f'<div class="kpi"><div class="kpi-v" style="color:{c};font-size:1.8rem;">{val}</div><div class="kpi-l">{lbl}</div></div>', unsafe_allow_html=True)
@@ -1228,7 +1452,128 @@ elif "Health" in page:
                         unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  PAGE 4 — SMART QUERY
+#  PAGE 4 — CULTURE PILLARS
+# ══════════════════════════════════════════════════════════════════════════════
+elif "Culture" in page:
+    st.markdown(f"""<div class="hero fade-up" style="background:linear-gradient(135deg,#2C3E50 0%,#4A235A 40%,#1A5276 100%);box-shadow:0 8px 32px rgba(44,62,80,0.35);">
+        <div style="font-size:2rem;margin-bottom:6px;position:relative;z-index:1;">🎯</div>
+        <div class="hero-title">Culture Pillars</div>
+        <div class="hero-sub">Birla Opus · Agility · Care · Courage · Innovation · Vibrancy</div>
+    </div>""", unsafe_allow_html=True)
+
+    pillar_tabs = st.tabs(["🟡 Agility","🟠 Care","🟣 Courage","🔴 Innovation","🟢 Vibrancy"])
+    pillar_names = ["Agility","Care","Courage","Innovation","Vibrancy"]
+
+    def render_pillar_tab(house_name):
+        p = PILLARS[house_name]
+        color = p["color"]; dark = p["dark"]; icon_svg = p["icon"]
+
+        house_data = q("SELECT COALESCE(SUM(s.Score),0) AS TotalPoints, COUNT(DISTINCT e.EmployeeID) AS Members FROM Employees e LEFT JOIN Scores s ON e.EmployeeID=s.EmployeeID WHERE e.House=?", (house_name,))
+        total_pts = int(house_data.iloc[0]['TotalPoints']) if len(house_data) else 0
+        total_members = int(house_data.iloc[0]['Members']) if len(house_data) else 0
+        part_data = q("SELECT COUNT(DISTINCT p.EmployeeID) AS Participated FROM Participation p JOIN Employees e ON p.EmployeeID=e.EmployeeID WHERE e.House=?", (house_name,))
+        participated = int(part_data.iloc[0]['Participated']) if len(part_data) else 0
+        if participated == 0 and total_members > 0:
+            score_part = q("SELECT COUNT(DISTINCT s.EmployeeID) AS Participated FROM Scores s JOIN Employees e ON s.EmployeeID=e.EmployeeID WHERE e.House=? AND s.Score > 0", (house_name,))
+            participated = int(score_part.iloc[0]['Participated']) if len(score_part) else 0
+        part_pct = round(participated/total_members*100,1) if total_members else 0
+
+        st.markdown(f"""
+        <div style="background:linear-gradient({p['grad']});border-radius:20px;padding:28px 32px;margin-bottom:20px;position:relative;overflow:hidden;">
+            <div style="display:flex;align-items:center;gap:28px;position:relative;z-index:1;">
+                <div style="width:72px;height:72px;background:rgba(255,255,255,0.2);border-radius:16px;display:flex;align-items:center;justify-content:center;">
+                    <div style="color:#fff;">{icon_svg}</div>
+                </div>
+                <div style="flex:1;">
+                    <div style="font-family:'Montserrat',sans-serif;font-size:0.6rem;font-weight:800;letter-spacing:3px;color:rgba(255,255,255,0.7);text-transform:uppercase;">Culture Pillar · House</div>
+                    <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:#fff;line-height:1.1;">{house_name}</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:#fff;line-height:1;">{total_pts:,}</div>
+                    <div style="font-family:'Montserrat',sans-serif;font-size:0.6rem;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,0.7);text-transform:uppercase;">Total House Points</div>
+                </div>
+            </div>
+        </div>""", unsafe_allow_html=True)
+
+        kc1,kc2,kc3,kc4 = st.columns(4)
+        for col,(val,lbl) in zip([kc1,kc2,kc3,kc4],[
+            (total_members,"Members"),(participated,"Participated"),
+            (f"{part_pct}%","Participation Rate"),(f"{total_pts:,}","Total Points")]):
+            with col:
+                st.markdown(f'<div class="kpi"><div class="kpi-v" style="color:{color};font-size:1.8rem;">{val}</div><div class="kpi-l">{lbl}</div></div>', unsafe_allow_html=True)
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        col_pod, col_win = st.columns(2, gap="large")
+        with col_pod:
+            st.markdown(f'<div class="sh" style="color:{dark};border-bottom-color:{color}44;">🏅 Top 3 Performers</div>', unsafe_allow_html=True)
+            top3_house = q("""SELECT s.EmployeeName AS Name, s.Department, COALESCE(s.Score,0) AS TotalPoints
+                              FROM Scores s JOIN Employees e ON s.EmployeeID=e.EmployeeID
+                              WHERE e.House=? ORDER BY TotalPoints DESC LIMIT 3""", (house_name,))
+            if len(top3_house):
+                html_p = '<div class="card"><div class="podium">'
+                for si,cls,em,num in [(1,"pod2","🥈","2"),(0,"pod1","🥇","1"),(2,"pod3","🥉","3")]:
+                    if si < len(top3_house):
+                        r = top3_house.iloc[si]
+                        nm = "<br>".join(str(r['Name']).split()[:2])
+                        html_p += (f'<div class="pod {cls}"><div class="pod-av">{em}</div>'
+                                   f'<div class="pod-nm">{nm}</div><div class="pod-dp">{r["Department"]}</div>'
+                                   f'<div class="pod-sc" style="color:{color};">{int(r["TotalPoints"])} pts</div>'
+                                   f'<div class="pod-st">{num}</div></div>')
+                html_p += '</div></div>'
+                st.markdown(html_p, unsafe_allow_html=True)
+            else:
+                st.markdown(f'<div class="ins" style="border-left-color:{color};">No members in {house_name} house yet. Assign via Admin → Employees.</div>', unsafe_allow_html=True)
+
+        with col_win:
+            st.markdown(f'<div class="sh" style="color:{dark};border-bottom-color:{color}44;">🎮 Game Winners from {house_name}</div>', unsafe_allow_html=True)
+            house_winners = q("""SELECT p.EventName, p.Position, p.EmployeeName, p.FinalPoints
+                                 FROM Participation p JOIN Employees e ON p.EmployeeID=e.EmployeeID
+                                 WHERE e.House=? AND p.Position IN ('Winner','Runner-up','2nd Runner-up')
+                                 ORDER BY p.EventName, CASE p.Position WHEN 'Winner' THEN 1 WHEN 'Runner-up' THEN 2 ELSE 3 END""", (house_name,))
+            pos_cfg2 = {'Winner':('🥇',CG,'#FFFBEC'),'Runner-up':('🥈','#909090','#F8F8F8'),'2nd Runner-up':('🥉','#CD7F32','#FFF5EE')}
+            if len(house_winners):
+                win_html = '<div class="card" style="padding:16px 18px;max-height:320px;overflow-y:auto;">'
+                for _, w in house_winners.iterrows():
+                    em,cl,bg = pos_cfg2.get(w['Position'],('▸',CGY,'#F8F8F8'))
+                    win_html += (f'<div style="display:flex;align-items:center;gap:9px;margin-bottom:7px;background:{bg};border-radius:8px;padding:8px 11px;">'
+                                 f'<span style="font-size:1.1rem;">{em}</span>'
+                                 f'<div style="flex:1;"><div style="font-size:0.82rem;font-weight:700;color:{CBS};">{w["EmployeeName"]}</div>'
+                                 f'<div style="font-size:0.62rem;color:{CGY};">{w["EventName"]} · {w["Position"]}</div></div>'
+                                 f'<div style="font-family:Playfair Display,serif;font-size:0.9rem;font-weight:700;color:{cl};">{int(w["FinalPoints"])}pts</div></div>')
+                win_html += '</div>'
+                st.markdown(win_html, unsafe_allow_html=True)
+            else:
+                st.markdown(f'<div class="ins" style="border-left-color:{color};">No winners from {house_name} house yet.</div>', unsafe_allow_html=True)
+
+        st.markdown(f'<div class="sh" style="margin-top:4px;color:{dark};border-bottom-color:{color}44;">📋 All {house_name} Members — Scores & Rankings</div>', unsafe_allow_html=True)
+        members_df = q("""SELECT ROW_NUMBER() OVER (ORDER BY COALESCE(s.Score,0) DESC) AS Rank,
+                                 e.Name, e.Department, e.Designation,
+                                 COALESCE(s.Score,0) AS TotalPoints,
+                                 COUNT(p.PID) AS GamesPlayed,
+                                 COUNT(CASE WHEN p.Position='Winner' THEN 1 END) AS Wins
+                          FROM Employees e
+                          LEFT JOIN Scores s ON e.EmployeeID=s.EmployeeID
+                          LEFT JOIN Participation p ON e.EmployeeID=p.EmployeeID
+                          WHERE e.House=?
+                          GROUP BY e.EmployeeID ORDER BY TotalPoints DESC""", (house_name,))
+        if len(members_df):
+            st.dataframe(members_df, use_container_width=True, hide_index=True,
+                column_config={
+                    "Rank": st.column_config.NumberColumn("Rank 🏅",format="%d"),
+                    "TotalPoints": st.column_config.NumberColumn("Total Points 🏆",format="%d"),
+                    "GamesPlayed": st.column_config.NumberColumn("Games Played ⚽",format="%d"),
+                    "Wins": st.column_config.NumberColumn("Wins 🥇",format="%d"),
+                })
+            st.markdown(f'<div class="ins" style="border-left-color:{color};font-size:0.78rem;">{len(members_df)} members in {house_name} house</div>', unsafe_allow_html=True)
+        else:
+            st.markdown(f'<div class="ins" style="border-left-color:{color};">No employees assigned to {house_name} house yet. Go to Admin → Employees to assign.</div>', unsafe_allow_html=True)
+
+    for tab, pname in zip(pillar_tabs, pillar_names):
+        with tab:
+            render_pillar_tab(pname)
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  PAGE 5 — SMART QUERY
 # ══════════════════════════════════════════════════════════════════════════════
 elif "Query" in page:
     st.markdown("""
@@ -1403,12 +1748,33 @@ elif "Admin" in page:
             if st.button("🔒 Logout"): st.session_state.admin_auth=False; st.rerun()
 
     is_admin = st.session_state.admin_auth
+
+    # ── FULL BACKUP ───────────────────────────────────────────────────────
+    st.markdown(f'<div class="ins" style="border-left-color:#F39C12;background:linear-gradient(135deg,#FFFBEC,#FFF);font-size:0.85rem;">⚠️ <b>Always take a full backup before making bulk changes.</b> Your data lives entirely in the local SQLite database.</div>', unsafe_allow_html=True)
+    if st.button("📥 EXPORT FULL BACKUP — All Tables → Excel", use_container_width=True):
+        try:
+            buf = io.BytesIO()
+            with pd.ExcelWriter(buf, engine='openpyxl') as writer:
+                q("SELECT * FROM Employees").to_excel(writer, sheet_name='Employees', index=False)
+                q("SELECT * FROM Scores").to_excel(writer, sheet_name='Scores', index=False)
+                q("SELECT * FROM Participation").to_excel(writer, sheet_name='Participation', index=False)
+                q("SELECT * FROM Events").to_excel(writer, sheet_name='Events', index=False)
+                q("SELECT * FROM Schedule").to_excel(writer, sheet_name='Schedule', index=False)
+                q("SELECT * FROM BMI").to_excel(writer, sheet_name='BMI', index=False)
+            st.download_button("⬇️ Download Backup Now", buf.getvalue(),
+                f"WellnessArena_Backup_{date.today().isoformat()}.xlsx",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                use_container_width=True)
+        except Exception as e:
+            st.error(f"Backup error: {e}")
+    st.markdown("<br>", unsafe_allow_html=True)
+
     tabs = st.tabs(["👥 Employees","⚽ Events","🎮 Participation","📅 Schedule","📊 Scores","🏥 BMI Upload"])
 
     # ── TAB 1: EMPLOYEES ──────────────────────────────────────────────────
     with tabs[0]:
         st.markdown(f'<div class="sh" style="margin-top:14px;">👥 Employee Master</div>', unsafe_allow_html=True)
-        emp_df = q("SELECT EmployeeID,Name,Department,Designation,JoinDate FROM Employees ORDER BY Department,Name")
+        emp_df = q("SELECT EmployeeID,Name,Department,Designation,House FROM Employees ORDER BY Department,Name")
         ef1,ef2 = st.columns([1.5,2])
         with ef1:
             depts = ["All"]+sorted(emp_df['Department'].unique().tolist()) if len(emp_df) else ["All"]
@@ -1427,6 +1793,39 @@ elif "Admin" in page:
         if not is_admin:
             st.markdown(f'<div class="ins" style="font-size:0.8rem;">🔒 <b>Read-only.</b> Login as Admin to Add / Edit / Delete.</div>', unsafe_allow_html=True)
         else:
+            # ── Bulk House Sync from Excel ─────────────────────────────
+            with st.expander("📥 Bulk Update Houses from Excel", expanded=False):
+                st.markdown(f'<div class="ins ins-green" style="font-size:0.8rem;">Upload an Excel with columns <b>Employee_ID</b> and <b>House</b> to bulk-assign houses to all employees in one go.</div>', unsafe_allow_html=True)
+                house_file = st.file_uploader("Upload Excel (Employee_ID + House columns)", type=["xlsx"], key="house_upload")
+                if house_file:
+                    try:
+                        hdf = pd.read_excel(house_file)
+                        # Support both Employee_ID and EmployeeID column names
+                        if 'Employee_ID' in hdf.columns:
+                            hdf = hdf.rename(columns={'Employee_ID':'EmployeeID'})
+                        if 'Employee_Name' in hdf.columns and 'Name' not in hdf.columns:
+                            hdf = hdf.rename(columns={'Employee_Name':'Name'})
+                        if 'EmployeeID' not in hdf.columns or 'House' not in hdf.columns:
+                            st.error("❌ Excel must have 'Employee_ID' and 'House' columns.")
+                        else:
+                            hdf = hdf[['EmployeeID','House']].dropna(subset=['EmployeeID'])
+                            valid_houses = list(PILLARS.keys())
+                            conn = get_conn(); updated = 0; skipped = 0
+                            for _, row in hdf.iterrows():
+                                house_val = str(row['House']).strip() if str(row['House']) not in ['nan','None',''] else ''
+                                if house_val in valid_houses:
+                                    conn.execute("UPDATE Employees SET House=? WHERE EmployeeID=?", (house_val, int(row['EmployeeID'])))
+                                    updated += 1
+                                else:
+                                    skipped += 1
+                            conn.commit(); conn.close()
+                            st.success(f"✅ Updated {updated} employees. {skipped} skipped (invalid/empty house name).")
+                            if skipped > 0:
+                                st.markdown(f'<div class="ins" style="font-size:0.78rem;">Valid house names: {", ".join(valid_houses)}</div>', unsafe_allow_html=True)
+                            st.rerun()
+                    except Exception as e:
+                        st.error(f"Error: {e}")
+            st.markdown("---")
             op = st.radio("Action:",["➕ Add New","✏️ Edit","🗑️ Delete"],horizontal=True,key="emp_op")
             if op == "➕ Add New":
                 c1,c2,c3 = st.columns(3)
@@ -1439,14 +1838,15 @@ elif "Admin" in page:
                 if ndept_sel == "+ New Department":
                     ndept = st.text_input("New Department Name",key="emp_ndcustom")
                 ndesig = st.text_input("Designation (optional)",placeholder="e.g. Engineer",key="emp_ndesig")
+                nhouse = st.selectbox("House / Culture Pillar",["(None)"]+list(PILLARS.keys()),key="emp_nhouse")
                 if st.button("➕ ADD EMPLOYEE",use_container_width=True):
                     if nname and ndept and ndept != "+ New Department":
                         try:
                             conn=get_conn()
-                            conn.execute("INSERT OR IGNORE INTO Employees (EmployeeID,Name,Department,Designation,JoinDate) VALUES (?,?,?,?,?)",
-                                         (int(nid),nname.strip(),ndept.strip(),ndesig.strip(),''))
+                            conn.execute("INSERT OR IGNORE INTO Employees (EmployeeID,Name,Department,Designation,JoinDate,House) VALUES (?,?,?,?,?,?)",
+                                         (int(nid),nname.strip(),ndept.strip(),ndesig.strip(),'',nhouse if nhouse!="(None)" else ''))
                             conn.commit(); conn.close()
-                            st.success(f"✅ Added {nname} to {ndept}"); st.rerun()
+                            st.success(f"✅ Added {nname} to {ndept} · House: {nhouse}"); st.rerun()
                         except Exception as e: st.error(str(e))
                     else: st.warning("Fill all required fields.")
             elif op == "✏️ Edit":
@@ -1461,8 +1861,16 @@ elif "Admin" in page:
                         all_depts = sorted(emp_df['Department'].unique().tolist())
                         udept = st.selectbox("Department",all_depts,index=all_depts.index(cur['Department']) if cur['Department'] in all_depts else 0,key="emp_udept")
                     with ec3: udesig = st.text_input("Designation",value=str(cur['Designation']) if str(cur['Designation'])!='nan' else '',key="emp_udesig")
+                    cur_house_val = str(cur.get('House','')) if 'House' in cur.index else ''
+                    cur_house_val = '' if cur_house_val in ['nan','None'] else cur_house_val
+                    house_list = list(PILLARS.keys())
+                    uhouse = st.selectbox("House / Culture Pillar",["(None)"]+house_list,
+                                          index=(house_list.index(cur_house_val)+1) if cur_house_val in house_list else 0,
+                                          key="emp_uhouse")
                     if st.button("💾 SAVE CHANGES",use_container_width=True):
-                        conn=get_conn(); conn.execute("UPDATE Employees SET Name=?,Department=?,Designation=? WHERE EmployeeID=?",(uname.strip(),udept,udesig.strip(),eid))
+                        conn=get_conn()
+                        conn.execute("UPDATE Employees SET Name=?,Department=?,Designation=?,House=? WHERE EmployeeID=?",
+                                     (uname.strip(),udept,udesig.strip(),uhouse if uhouse!="(None)" else '',eid))
                         conn.commit(); conn.close(); st.success("✅ Updated!"); st.rerun()
             elif op == "🗑️ Delete":
                 if len(emp_df):
@@ -1501,6 +1909,7 @@ elif "Admin" in page:
                 with ec3: ev_df2 = st.selectbox("Difficulty",["Casual","Medium","High"],key="ev_df2")
                 with ec4: ev_ml = st.number_input("Multiplier",value=1.0,min_value=0.5,max_value=5.0,step=0.1,key="ev_ml")
                 ep1,ep2,ep3 = st.columns(3)
+                ev_pillar = st.selectbox("Culture Pillar (optional)",["(None)"]+list(PILLARS.keys()),key="ev_pillar_add")
                 with ep1: ev_pw  = st.text_input("🥇 Prize for Winner",placeholder="e.g. Trophy + ₹5000",key="ev_pw")
                 with ep2: ev_pru = st.text_input("🥈 Prize for Runner-up",placeholder="e.g. Medal + ₹2000",key="ev_pru")
                 with ep3: ev_p2r = st.text_input("🥉 Prize for 2nd Runner-up",placeholder="e.g. Certificate",key="ev_p2r")
@@ -1508,8 +1917,8 @@ elif "Admin" in page:
                     if ev_nm:
                         try:
                             conn=get_conn()
-                            conn.execute("INSERT OR IGNORE INTO Events (EventName,Type,Difficulty,Multiplier,Description,PrizeWinner,PrizeRunnerUp,Prize2ndRunnerUp) VALUES (?,?,?,?,?,?,?,?)",
-                                         (ev_nm.strip(),ev_tp,ev_df2,ev_ml,'',ev_pw,ev_pru,ev_p2r))
+                            conn.execute("INSERT OR IGNORE INTO Events (EventName,Type,Difficulty,Multiplier,Description,Pillar,PrizeWinner,PrizeRunnerUp,Prize2ndRunnerUp) VALUES (?,?,?,?,?,?,?,?,?)",
+                                         (ev_nm.strip(),ev_tp,ev_df2,ev_ml,'',ev_pillar if ev_pillar!="(None)" else '',ev_pw,ev_pru,ev_p2r))
                             conn.commit(); conn.close()
                             st.success(f"✅ Added event: {ev_nm}"); st.rerun()
                         except Exception as e: st.error(str(e))
@@ -1544,6 +1953,18 @@ elif "Admin" in page:
     with tabs[2]:
         st.markdown(f'<div class="sh" style="margin-top:14px;">🎮 Participation Records</div>', unsafe_allow_html=True)
         part_df = q("SELECT PID,EmployeeID,EmployeeName,EventName,Position,FinalPoints,Date FROM Participation ORDER BY Date DESC,EmployeeName")
+        # Convert Excel serial dates (e.g. 46359) to readable YYYY-MM-DD
+        def fix_date(val):
+            try:
+                v = str(val).strip()
+                if v.replace('.','').isdigit():  # Excel serial number
+                    import datetime as dt_mod
+                    return (dt_mod.date(1899,12,30) + dt_mod.timedelta(days=int(float(v)))).isoformat()
+                return v[:10] if len(v) >= 10 else v  # trim to YYYY-MM-DD
+            except:
+                return val
+        if len(part_df):
+            part_df['Date'] = part_df['Date'].apply(fix_date)
         pf1,pf2 = st.columns([1.5,2])
         with pf1:
             ev_names_p = ["All"]+sorted(part_df['EventName'].unique().tolist()) if len(part_df) else ["All"]
@@ -1724,7 +2145,8 @@ elif "Admin" in page:
 
     # ── TAB 6: BMI UPLOAD ─────────────────────────────────────────────────
     with tabs[5]:
-        st.markdown(f'<div class="sh" style="margin-top:14px;">🏥 BMI Data — View & Upload</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="sh" style="margin-top:14px;">🏥 BMI Data — Upload (Admin Only)</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="ins" style="border-left-color:#F39C12;background:linear-gradient(135deg,#FFFBEC,#FFF);font-size:0.8rem;">⚠️ <b>Admin only.</b> Full data including Weight & Height is stored but never shown to employees. Employees see only BMI & Category.</div>', unsafe_allow_html=True)
         bmi_view = q("SELECT EmployeeName,Department,Month,Year,Weight_kg,Height_cm,ROUND(BMI,2) AS BMI,Category FROM BMI ORDER BY Year DESC,Month,EmployeeName")
         if len(bmi_view):
             st.dataframe(bmi_view,use_container_width=True,hide_index=True)
